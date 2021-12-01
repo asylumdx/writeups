@@ -293,7 +293,9 @@ We noticed the flag069.bin file(nice) and opened it. Inside we get the second fl
 **hack10{W3lc0me\_T0\_m03b1lE\_f0ren5iC}**
 
 **5.4 odyssey-03**
+
 ![](.gitbook/assets/Picture31.png)
+
 Opening the Messaging app of the device, we get to see several conversations that seem to lead to the third flag.
 
 ![](.gitbook/assets/Picture32.png)
