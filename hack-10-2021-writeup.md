@@ -5,21 +5,19 @@ description: >-
   teams.
 ---
 
-# Hack@10 2021 Writeup
+# 🦌 Hack@10 2021 Writeup
 
 ![Final scoreboard of the CTF](.gitbook/assets/ss.jpg)
 
-
-
-****
+***
 
 **GROUP: Sheesh**
 
-**Team Members:** [**asylumdx**](https://twitter.com/asylumdx)**(me),** [**4fqm5**](https://twitter.com/4fqm5)**,** [**ghostinewires\_**](https://twitter.com/ghostinwires\_)****
+**Team Members:** [**asylumdx**](https://twitter.com/asylumdx)**(me),** [**4fqm5**](https://twitter.com/4fqm5)**,** [**ghostinewires\_**](https://twitter.com/ghostinwires\_)\*\*\*\*
 
-****
+***
 
-****
+***
 
 ### OSINT <a href="#_g35zcx9z0f7" id="_g35zcx9z0f7"></a>
 
@@ -49,7 +47,7 @@ At first we try to find hidden sheet, which is Sheet 2 and 3 but
 
 ![](.gitbook/assets/5)
 
-That is not the flag :( so we proceed with trying to extract the data from the xlsx file since we know that xlsx is just a [zip compressed file](https://www.lifewire.com/what-is-an-xlsx-file-2622540). We can do this with the binwalk command _binwalk --_dd='.\*' file.
+That is not the flag :( so we proceed with trying to extract the data from the xlsx file since we know that xlsx is just a [zip compressed file](https://www.lifewire.com/what-is-an-xlsx-file-2622540). We can do this with the binwalk command \_binwalk --\_dd='.\*' file.
 
 ![](.gitbook/assets/6)
 
@@ -75,7 +73,7 @@ Decode the string from base 64 and we get the flag.
 
 **😤🤟** First blood! Sheeesh!
 
-I am not sure if this is the intended solution but after downloading the[ powerflag.pttm](https://drive.google.com/file/d/1PTfiDF5iGtuDXbJ7\_wJHRTJv6BiEqzTb/edit) file. We treated this challenge the same as the cheesecake challenge. Proceed to extract data from the file with _binwalk --_dd='.\*' file
+I am not sure if this is the intended solution but after downloading the[ powerflag.pttm](https://drive.google.com/file/d/1PTfiDF5iGtuDXbJ7\_wJHRTJv6BiEqzTb/edit) file. We treated this challenge the same as the cheesecake challenge. Proceed to extract data from the file with \_binwalk --\_dd='.\*' file
 
 ![](.gitbook/assets/12)
 
@@ -99,8 +97,7 @@ Hint: “143 _**word**_ to open my heart” and “The art of hiding is part of 
 
 After scanning the QR code, we got ''I Love You'' so that is our secret key, then we use **steghide** because of the hint “The art of hiding is part of love” and yes, we love steganography!
 
-Let’s help him solve his brokenheart issue!\
-
+Let’s help him solve his brokenheart issue!\\
 
 $ steghide extract -sf brokenheart.jpg
 
@@ -132,21 +129,17 @@ And sheeeeesh! A flag :) **hack10{4s\_aBov3\_5o\_Bel0w}**
 
 **3.2 penat**
 
-
-
 For this challenge, we get an mp3 file with scratchy noise. Just use Sonic Visualiser > add Spectrogram > set Window 256
 
 ![](.gitbook/assets/Picture1.png)
 
-**hack10{1m\_t1R3d\_0f\_Mc0\_jkjk}** Easyyyyyy Peasy!\
-
+**hack10{1m\_t1R3d\_0f\_Mc0\_jkjk}** Easyyyyyy Peasy!\\
 
 ### Cryptography <a href="#_saepiv1qnvmo" id="_saepiv1qnvmo"></a>
 
 **4.1 tr1ple T**
 
 ![](.gitbook/assets/Picture2.png)
-
 
 ![](.gitbook/assets/Picture3.png)
 
@@ -158,8 +151,7 @@ Let’s just decode it. It’s a Tic-Tac-Toe! We then proceed to decode the symb
 
 ![](.gitbook/assets/Picture4.png)
 
-
-From this question, we got PiedPiper jpg file 
+From this question, we got PiedPiper jpg file
 
 ![](.gitbook/assets/Picture5.png)
 
@@ -190,7 +182,6 @@ And we managed to get the flag file.
 **5.1 neighbor**
 
 ![](.gitbook/assets/Picture10.png)
-
 
 We got a pcapng file and opened it in wireshark. Filtering with http, we could see that the user was accessing a website at [http://192.168.175.123:9001](http://192.168.175.123:9001).
 

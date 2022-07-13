@@ -7,11 +7,9 @@ description: >-
 
 # Pico CTF 2021 Writeups
 
+![](<.gitbook/assets/image (117) (1).png>)
 
-
-![](<.gitbook/assets/image (117).png>)
-
-![](<.gitbook/assets/image (118).png>)
+![](<.gitbook/assets/image (118) (1).png>)
 
 ## **W**eb Exploitation
 
@@ -37,97 +35,97 @@ We were given a website
 
 ![](.gitbook/assets/ah2.png)
 
-Based on the challenge title, we should try get the website header either using curl or Burpsuite. curl command : `curl -X HEAD -i` [`http://mercury.picoctf.net:47967/`](http://mercury.picoctf.net:47967)``
+Based on the challenge title, we should try get the website header either using curl or Burpsuite. curl command : `curl -X HEAD -i` [`http://mercury.picoctf.net:47967/`](http://mercury.picoctf.net:47967)\`\`
 
-![](<.gitbook/assets/image (14).png>)
+![](<.gitbook/assets/image (14) (1).png>)
 
 and we got the flag from the header. **picoCTF{r3j3ct\_th3\_du4l1ty\_cca66bd3}**
 
 ### Cookies
 
-![](<.gitbook/assets/image (15).png>)
+![](<.gitbook/assets/image (15) (1).png>)
 
-![](<.gitbook/assets/image (16).png>)
+![](<.gitbook/assets/image (16) (1).png>)
 
 The title and hint of the website talks about cookies, lets view the cookies using the in browser function.
 
-![](<.gitbook/assets/image (18).png>)
+![](<.gitbook/assets/image (18) (1).png>)
 
 The current cookie value is -1, lets try changing it to 1and see if we get any output.
 
-![](<.gitbook/assets/image (19).png>)
+![](<.gitbook/assets/image (19) (1).png>)
 
 Based on the output, we need to traverse and try different value of cookies to get the flag.
 
-![](<.gitbook/assets/image (20).png>)
+![](<.gitbook/assets/image (20) (1).png>)
 
 And we got the flag on the 18 cookies. **picoCTF{3v3ry1\_l0v3s\_c00k135\_064663be}**
 
 ### Scavenger Hunt
 
-![](<.gitbook/assets/image (22).png>)
+![](<.gitbook/assets/image (22) (1).png>)
 
 ![](<.gitbook/assets/image (23).png>)
 
 Seems like a normal html website, lets take a look at the source.
 
-![](<.gitbook/assets/image (24).png>)
+![](<.gitbook/assets/image (24) (1).png>)
 
 It seems that this is a directory traversing challenge, we got the first part picoCTF{t from the source. It says the website was made from html,css and js. Lets take a look at those.
 
-![](<.gitbook/assets/image (27).png>)
+![](<.gitbook/assets/image (27) (1).png>)
 
 Second part: h4ts\_4\_10
 
-![](<.gitbook/assets/image (25).png>)
+![](<.gitbook/assets/image (25) (1).png>)
 
 We found a js script, lets open it.
 
-![](<.gitbook/assets/image (26).png>)
+![](<.gitbook/assets/image (26) (1).png>)
 
 From the hint, we can guess the next part is in robots.txt that is used to configure crawler from accessing certain directory of the website.
 
-![](<.gitbook/assets/image (28).png>)
+![](<.gitbook/assets/image (28) (1).png>)
 
 3rd part: t\_0f\_pl4c
 
-![](<.gitbook/assets/image (29).png>)
+![](<.gitbook/assets/image (29) (1).png>)
 
 4th part: 3s\_2\_100k
 
-![](<.gitbook/assets/image (30).png>)
+![](<.gitbook/assets/image (30) (1).png>)
 
 5th part: \_f7ce8828} . flag: **picoCTF{th4ts\_4\_10t\_0f\_pl4c3s\_2\_100k\_f7ce8828}**
 
 ### Who are you?
 
-![](<.gitbook/assets/image (31).png>)
+![](<.gitbook/assets/image (31) (1).png>)
 
-![](<.gitbook/assets/image (33).png>)
+![](<.gitbook/assets/image (33) (1).png>)
 
 Opening the website told us that we can only access it with picobrowser. From reading past writeup, it seems that we need to change the user agent to access it. We use the curl command : `curl -A "PicoBrowser" http://mercury.picoctf.net:46199` to change the user agent.
 
-![](<.gitbook/assets/image (34).png>)
+![](<.gitbook/assets/image (34) (1).png>)
 
 From the website, it asks us to visit the website, from the website itself. We can use curl command : `curl -A "PicoBrowser" http://mercury.picoctf.net:46199/ -H "Referer: http://mercury.picoctf.net:46199"`
 
-![](<.gitbook/assets/image (35).png>)
+![](<.gitbook/assets/image (35) (1).png>)
 
 Next it asks us to access the website from 2018. We can modify the time header through: `curl -A "PicoBrowser" http://mercury.picoctf.net:46199/ -H "Referer: http://mercury.picoctf.net:46199" -H "Date: Wed 17 Mar 2018 02:47:59 GMT"`
 
-![](<.gitbook/assets/image (36).png>)
+![](<.gitbook/assets/image (36) (1).png>)
 
 Now it asks us to send request without being tracked. We can use the DNT(Do Not Track) header curl command: `curl -A "PicoBrowser" http://mercury.picoctf.net:46199/ -H "Referer: http://mercury.picoctf.net:46199" -H "Date: Wed 17 Mar 2018 02:47:59 GMT" -H "DNT: 1"`
 
-![](<.gitbook/assets/image (37).png>)
+![](<.gitbook/assets/image (37) (1).png>)
 
-Now it only allows people from Sweden. We just need to use a sweden ip and X-Forwarded-For header to foward our curl request ip.  `curl -A "PicoBrowser" http://mercury.picoctf.net:46199/ -H "Referer: http://mercury.picoctf.net:46199" -H "Date: Wed 17 Mar 2018 02:47:59 GMT" -H "DNT: 1" -H "X-Forwarded-For:193.150.233.115"`
+Now it only allows people from Sweden. We just need to use a sweden ip and X-Forwarded-For header to foward our curl request ip. `curl -A "PicoBrowser" http://mercury.picoctf.net:46199/ -H "Referer: http://mercury.picoctf.net:46199" -H "Date: Wed 17 Mar 2018 02:47:59 GMT" -H "DNT: 1" -H "X-Forwarded-For:193.150.233.115"`
 
-![](<.gitbook/assets/image (38).png>)
+![](<.gitbook/assets/image (38) (1).png>)
 
 Now it also want us to speak in Sweden. We just need to change the language header using the syntax: `curl -A "PicoBrowser" http://mercury.picoctf.net:46199/ -H "Referer: http://mercury.picoctf.net:46199" -H "Date: Wed 17 Mar 2018 02:47:59 GMT" -H "DNT: 1" -H "X-Forwarded-For:193.150.233.115" -H 'Accept-LAnguage: sv'`
 
-![](<.gitbook/assets/image (39).png>)
+![](<.gitbook/assets/image (39) (1).png>)
 
 And we finally got the flag. **picoCTF{http\_h34d3rs\_v3ry\_c0Ol\_much\_w0w\_8d5d8d77}**
 
@@ -135,7 +133,7 @@ And we finally got the flag. **picoCTF{http\_h34d3rs\_v3ry\_c0Ol\_much\_w0w\_8d5
 
 ![](<.gitbook/assets/image (40).png>)
 
-![](<.gitbook/assets/image (41).png>)
+![](<.gitbook/assets/image (41) (1).png>)
 
 This challenge is straight forward. We just need to look for the wasm files in the debugger browser function to get the flag. **picoCTF{8857462f9e30faae4d037e5e25fee1ce}**
 
@@ -143,47 +141,47 @@ This challenge is straight forward. We just need to look for the wasm files in t
 
 ![](<.gitbook/assets/image (42).png>)
 
-This challenge is about the md5 hash collision that makes it unsecure.&#x20;
+This challenge is about the md5 hash collision that makes it unsecure.
 
-![](<.gitbook/assets/image (43).png>)
+![](<.gitbook/assets/image (43) (1).png>)
 
 The website requires us to upload two different pdf files with the same hashes. It also has an upload limit not allowing for more than 100kbs files. By using this [website](https://www.mscs.dal.ca/\~selinger/md5collision/), we got two exe program with md5 hash collision.
 
-![](<.gitbook/assets/image (44).png>)
+![](<.gitbook/assets/image (44) (1).png>)
 
 Now since the php script only requires the uploaded files to have .pdf extension, we can just rename the files and add .pdf before uploading it.
 
-![](<.gitbook/assets/image (45).png>)
+![](<.gitbook/assets/image (45) (1).png>)
 
-![](<.gitbook/assets/image (46).png>)
+![](<.gitbook/assets/image (46) (1).png>)
 
 And we got the flag. **picoCTF{c0ngr4ts\_u\_r\_1nv1t3d\_73b0c8ad}**
 
 ### Most cookies
 
-![](<.gitbook/assets/image (48).png>)
+![](<.gitbook/assets/image (48) (1).png>)
 
 This challenge is about cookie forging. We were given a website and the server source code.
 
-![](<.gitbook/assets/image (49).png>)
+![](<.gitbook/assets/image (49) (1).png>)
 
-From the challenge description, we know that the website uses flask cookies. Flask cookie was made by using a 'secret key' to ensure it's secure. Let's see the value of the cookie using [flask-unsign](https://github.com/Paradoxis/Flask-Unsign).&#x20;
+From the challenge description, we know that the website uses flask cookies. Flask cookie was made by using a 'secret key' to ensure it's secure. Let's see the value of the cookie using [flask-unsign](https://github.com/Paradoxis/Flask-Unsign).
 
-![](<.gitbook/assets/image (50).png>)
+![](<.gitbook/assets/image (50) (1).png>)
 
-Here we can see that the value is blank. However from the source code server.py, we can see that  in order to get the flag, we need to set it to admin.
+Here we can see that the value is blank. However from the source code server.py, we can see that in order to get the flag, we need to set it to admin.
 
-![](<.gitbook/assets/image (51).png>)
+![](<.gitbook/assets/image (51) (1).png>)
 
 Before continue to forge it, we need to find the secret key of the flask cookie.
 
-![](<.gitbook/assets/image (52).png>)
+![](<.gitbook/assets/image (52) (1).png>)
 
 Here we can see that the secret key is chosen randomly from a list. We can bruteforce the wordlist by using [`flask-unsign`](https://github.com/Paradoxis/Flask-Unsign) feature.
 
 ![](<.gitbook/assets/image (53).png>)
 
-![](<.gitbook/assets/image (54).png>)
+![](<.gitbook/assets/image (54) (1).png>)
 
 From the bruteforce, we found out the secret key is butter. Now we can forge a new cookie with value:admin and secret key: butter.
 
@@ -207,19 +205,19 @@ For this challenge we were given two images that seems to be made out of statics
 
 ![2nd image](.gitbook/assets/scrambled2.png)
 
-&#x20;I treated this challenge as steganography and used [StegSolve](https://github.com/eugenekolo/sec-tools/tree/master/stego/stegsolve) to combine both images to produce an output.&#x20;
+I treated this challenge as steganography and used [StegSolve](https://github.com/eugenekolo/sec-tools/tree/master/stego/stegsolve) to combine both images to produce an output.
 
 ![](.gitbook/assets/Screenshot\_1.png)
 
 After combining both and using the ADD function we can see the flag **picoCTF{0542dc1d).**
 
-### Mod 26&#x20;
+### Mod 26
 
-![](<.gitbook/assets/image (57).png>)
+![](<.gitbook/assets/image (57) (1).png>)
 
 It's a simple rot13 encryption. Let's use [CyberChef](https://gchq.github.io/CyberChef/#recipe=ROT13\(true,true,false,13\)\&input=Y3ZwYlBHU3thcmtnX2d2enJfVid5eV9nZWxfMl9lYmhhcWZfYnNfZWJnMTNfR1lwWE9IcVh9) to decrypt it.
 
-![](<.gitbook/assets/image (58).png>)
+![](<.gitbook/assets/image (58) (1).png>)
 
 flag: **picoCTF{next\_time\_I'll\_try\_2\_rounds\_of\_rot13\_TLcKBUdK}**
 
@@ -229,39 +227,39 @@ flag: **picoCTF{next\_time\_I'll\_try\_2\_rounds\_of\_rot13\_TLcKBUdK}**
 
 It's is the usual RSA challenge.
 
-![](<.gitbook/assets/image (60).png>)
+![](<.gitbook/assets/image (60) (1).png>)
 
-We have to decrypt it based on the value given. I'm not good at math and just use[ rsactftool](https://github.com/Ganapati/RsaCtfTool) to decrypt it.&#x20;
+We have to decrypt it based on the value given. I'm not good at math and just use[ rsactftool](https://github.com/Ganapati/RsaCtfTool) to decrypt it.
 
-![](<.gitbook/assets/image (61).png>)
+![](<.gitbook/assets/image (61) (1).png>)
 
 flag: **picoCTF{sma11\_N\_n0\_g0od\_23540368}**
 
 ### Dacshund Attacks
 
-![](<.gitbook/assets/image (62).png>)
+![](<.gitbook/assets/image (62) (1).png>)
 
 ![](<.gitbook/assets/image (63).png>)
 
 In this challenge we were given e,n and c value. The d value can be calculated by yourself. Based on the challenge we know that d has a small value meaning it is vulnerable to the[ wiener attack](https://en.wikipedia.org/wiki/Wiener's\_attack). We can use rsactftool again to decrypt it.
 
-![](<.gitbook/assets/image (64).png>)
+![](<.gitbook/assets/image (64) (1).png>)
 
 Flag: **picoCTF{proving\_wiener\_1146084}**
 
 ### Play Nice
 
-![](<.gitbook/assets/image (65).png>)
+![](<.gitbook/assets/image (65) (1).png>)
 
-![](<.gitbook/assets/image (66).png>)
+![](<.gitbook/assets/image (66) (1).png>)
 
 This is just a playfair cipher. We can use [https://www.dcode.fr/playfair-cipher](https://www.dcode.fr/playfair-cipher) to decrypt it.
 
-![](<.gitbook/assets/image (67).png>)
+![](<.gitbook/assets/image (67) (1).png>)
 
 Enter the plaintext into netcat.
 
-![](<.gitbook/assets/image (68).png>)
+![](<.gitbook/assets/image (68) (1).png>)
 
 flag: **picoCTF{2e71b99fd3d07af3808f8dff2652ae0e}**
 
@@ -269,13 +267,13 @@ flag: **picoCTF{2e71b99fd3d07af3808f8dff2652ae0e}**
 
 ### Transformation
 
-![](<.gitbook/assets/image (97).png>)
+![](<.gitbook/assets/image (97) (1).png>)
 
-![](<.gitbook/assets/image (98).png>)
+![](<.gitbook/assets/image (98) (1).png>)
 
 Opening the file, it looks some kind of unicode characters. I proceed to use [CyberChef](https://gchq.github.io/CyberChef) magic feature to see if it can decrypt it. By putting picoCTF in the crib, we were able to decode it.
 
-![](<.gitbook/assets/image (99).png>)
+![](<.gitbook/assets/image (99) (1).png>)
 
 **picoCTF{16\_bits\_inst34d\_of\_8\_26684c20}**
 
@@ -283,7 +281,7 @@ Opening the file, it looks some kind of unicode characters. I proceed to use [Cy
 
 ![](<.gitbook/assets/image (100).png>)
 
-![](<.gitbook/assets/image (101).png>)
+![](<.gitbook/assets/image (101) (1).png>)
 
 Looking at the source code, we only need to find the key\_part\_dynamic\_1trial part of the flag.
 
@@ -291,7 +289,7 @@ Looking at the source code, we only need to find the key\_part\_dynamic\_1trial 
 
 Looking at the source, we can see that the dynamic key is taken from the certain value of hexdigest of the username which is GOUGH. We can write a short python script to print it.
 
-![](<.gitbook/assets/image (103).png>)
+![](<.gitbook/assets/image (103) (1).png>)
 
 The full flag: **picoCTF{1n7h3|<3y\_of\_f911a486}**
 
@@ -301,7 +299,7 @@ The full flag: **picoCTF{1n7h3|<3y\_of\_f911a486}**
 
 ![](<.gitbook/assets/image (105).png>)
 
-From the source code, we can see the the program uses ROT47 to encode  and decode their bezos\_cc\_secret. We can use [CyberChef](https://gchq.github.io/CyberChef) to decode it.
+From the source code, we can see the the program uses ROT47 to encode and decode their bezos\_cc\_secret. We can use [CyberChef](https://gchq.github.io/CyberChef) to decode it.
 
 ![](<.gitbook/assets/image (106).png>)
 
@@ -315,31 +313,29 @@ Lets use netcat and save the output.
 
 ![](<.gitbook/assets/image (108).png>)
 
-![](<.gitbook/assets/image (109).png>)
+![](<.gitbook/assets/image (109) (1).png>)
 
 From the hint, we know that it is from[ CNC machine](https://www.steckermachine.com/blog/g-code-m-code) which uses G-code as the programming language. After some googling, I found this [https://ncviewer.com/](https://ncviewer.com) which can be used to plot the G-code language.
 
-![](<.gitbook/assets/image (110).png>)
+![](<.gitbook/assets/image (110) (1).png>)
 
 flag: **picoCTF{num3r1cal\_c0ntr0l\_f3fea95b}.**
 
 ### Shop
 
-![](<.gitbook/assets/image (111).png>)
+![](<.gitbook/assets/image (111) (1).png>)
 
-![](<.gitbook/assets/image (112).png>)
+![](<.gitbook/assets/image (112) (1).png>)
 
 In this challenge, we have to exploit the fact that there the programmer did not implement any edge cases in the coin system of the market. We can input any value into the coin such as negative to exploit it.
 
-![](<.gitbook/assets/image (113).png>)
+![](<.gitbook/assets/image (113) (1).png>)
 
 The flag is encrypted with ascii. Decode it using [https://convert.town/ascii-to-text](https://convert.town/ascii-to-text).
 
-![](<.gitbook/assets/image (114).png>)
+![](<.gitbook/assets/image (114) (1).png>)
 
 Flag: **picoCTF{b4d\_brogrammer\_797b292c}**.
-
-
 
 ## Forensics
 
@@ -347,7 +343,7 @@ Flag: **picoCTF{b4d\_brogrammer\_797b292c}**.
 
 ![](<.gitbook/assets/Screenshot\_4 (1).png>)
 
-In this challenge we were given an image and the hint says something regarding information.&#x20;
+In this challenge we were given an image and the hint says something regarding information.
 
 ![](.gitbook/assets/cat.jpg)
 
@@ -369,7 +365,7 @@ In this challenge we were given a Word document with a hint that there are some 
 
 ![](<.gitbook/assets/Screenshot\_1 (4).png>)
 
-&#x20;We're also given a youtube [video ](https://www.youtube.com/watch?v=Y7IJjnLGqTQ)that talks about macros in docx file. In the video it shows that we can use[ olevba](https://github.com/decalage2/oletools/wiki/olevba) to extract macros source code from word and ppt files.
+We're also given a youtube [video ](https://www.youtube.com/watch?v=Y7IJjnLGqTQ)that talks about macros in docx file. In the video it shows that we can use[ olevba](https://github.com/decalage2/oletools/wiki/olevba) to extract macros source code from word and ppt files.
 
 ![](<.gitbook/assets/Screenshot\_1 (1).png>)
 
@@ -408,17 +404,17 @@ In this challenge we were given a pcap file, lets open it with wireshark.
 
 ![](<.gitbook/assets/Screenshot\_1 (5).png>)
 
-I didnt find anything by trying to follow the packet so next  I try to export the objects from the pcap.
+I didnt find anything by trying to follow the packet so next I try to export the objects from the pcap.
 
 ![](<.gitbook/assets/Screenshot\_2 (3).png>)
 
 Then, I tried opening some of the files and found a string that seems like it has been encoded with Caesar Cipher.
 
-![](<.gitbook/assets/image (1).png>)
+![](<.gitbook/assets/image (1) (1).png>)
 
-So we can try decoding it either using some website such as [dcode.fr ](https://www.dcode.fr)or using python script  from [github](https://github.com/rhamaa/Caesar-Cipher-Brute-Force/blob/master/caesar\_brute.py):
+So we can try decoding it either using some website such as [dcode.fr ](https://www.dcode.fr)or using python script from [github](https://github.com/rhamaa/Caesar-Cipher-Brute-Force/blob/master/caesar\_brute.py):
 
-![](<.gitbook/assets/image (5).png>)
+![](<.gitbook/assets/image (5) (1).png>)
 
 The flag is **picoCTF{p33kab00\_**_**1\_s33\_u\_deadbeef}**._
 
@@ -454,9 +450,9 @@ In this challenge we have to work with a pcap file. The title says something abo
 
 We manages to get 2 strings files and 3 pictures.
 
-![](<.gitbook/assets/image (7).png>)
+![](<.gitbook/assets/image (7) (1).png>)
 
-Seems like it is encoded with caesar cipher. After decoding it, the instruction says:&#x20;
+Seems like it is encoded with caesar cipher. After decoding it, the instruction says:
 
 > TFTPDOESNTENCRYPTOURTRAFFICSOWEMUSTDISGUISEOURFLAGTRANSFER.FIGUREOUTAWAYTOHIDETHEFLAGANDIWILLCHECKBACKFORTHEPLAN
 
@@ -474,19 +470,19 @@ It seems that one of the image contains a hidden flag and they used [steghide](h
 
 After trying steghide on all 3 pictures, we finally get an output on the third image.
 
-![](<.gitbook/assets/image (10).png>)
+![](<.gitbook/assets/image (10) (1).png>)
 
 flag: **picoCTF{h1dd3n\_1n\_pLa1n\_51GHT\_18375919}**
 
 ### Wireshark two twooo two twoo ..
 
-![](<.gitbook/assets/image (12).png>)
+![](<.gitbook/assets/image (12) (1).png>)
 
-This challenge was quite guessy and time consuming. We were given a pcap file. However after trying the usual follow packets and export objects,  I only found fake flags. I saw someone mentions using NetworkMiner in the discord server and tried it.
+This challenge was quite guessy and time consuming. We were given a pcap file. However after trying the usual follow packets and export objects, I only found fake flags. I saw someone mentions using NetworkMiner in the discord server and tried it.
 
 ![](.gitbook/assets/1.png)
 
-After some times of taking a look at how it categorize each packets, I noticed something weird at the server and ip ttl value of some packets.&#x20;
+After some times of taking a look at how it categorize each packets, I noticed something weird at the server and ip ttl value of some packets.
 
 ![](.gitbook/assets/7.png)
 
@@ -518,7 +514,7 @@ The challenge gave us an image that can be mounted with a hint that the flag is 
 
 ![](.gitbook/assets/Screenshot\_3.png)
 
-&#x20;Manages to found the flag file in the root directory. The flag is **picoCTF{f0r3ns1c4t0rn0v1c30ba8d02d}.**
+Manages to found the flag file in the root directory. The flag is **picoCTF{f0r3ns1c4t0rn0v1c30ba8d02d}.**
 
 ### Milkslap
 
@@ -538,7 +534,7 @@ The flag is **picoCTF{imag3\_m4n1pul4t10n\_sl4p5}.**
 
 ![](<.gitbook/assets/Screenshot\_5 (2).png>)
 
-This was rather a quite hard and guessy challenge for me. In this challenge we were give a file. After looking at the header I was able to determine that it was a .bmp image.&#x20;
+This was rather a quite hard and guessy challenge for me. In this challenge we were give a file. After looking at the header I was able to determine that it was a .bmp image.
 
 ![](<.gitbook/assets/Screenshot\_2 (4).png>)
 
@@ -548,9 +544,9 @@ I then proceed to try opening the image using image magick display since windows
 
 From the displayed image, we can guess that this image hex value has been altered and not showing the whole picture.
 
-![](<.gitbook/assets/image (6).png>)
+![](<.gitbook/assets/image (6) (1).png>)
 
-After some times of reading the bitmap information from this[ website](http://www.ece.ualberta.ca/\~elliott/ee552/studentAppNotes/2003\_w/misc/bmp\_file\_format/bmp\_file\_format.htm), I started to try and change the hex value of the image. After several days of break and taking a look back, I was able to produce the full image though the colors are not fully correct by changing these offset: 00Ah, 0012h and 0016h.&#x20;
+After some times of reading the bitmap information from this[ website](http://www.ece.ualberta.ca/\~elliott/ee552/studentAppNotes/2003\_w/misc/bmp\_file\_format/bmp\_file\_format.htm), I started to try and change the hex value of the image. After several days of break and taking a look back, I was able to produce the full image though the colors are not fully correct by changing these offset: 00Ah, 0012h and 0016h.
 
 ![](<.gitbook/assets/Screenshot\_3 (3).png>)
 
@@ -564,17 +560,17 @@ The flag is: **picoCTF{qu1t3\_a\_v13w\_2020}.** This challenge taught me a lot a
 
 ### Obedient Cat
 
-![](<.gitbook/assets/image (69).png>)
+![](<.gitbook/assets/image (69) (1).png>)
 
 As the challenge name suggest, just use the cat syntax on the flag file.
 
-![](<.gitbook/assets/image (70).png>)
+![](<.gitbook/assets/image (70) (1).png>)
 
 flag: **picoCTF{s4n1ty\_v3r1f13d\_28e8376d}**
 
 ### Python Wrangling
 
-![](<.gitbook/assets/image (71).png>)
+![](<.gitbook/assets/image (71) (1).png>)
 
 Download the files, and use python to open them: `python3 ende.py -d flag.txt.en`
 
@@ -584,25 +580,25 @@ Download the files, and use python to open them: `python3 ende.py -d flag.txt.en
 
 ![](<.gitbook/assets/image (73).png>)
 
-![](<.gitbook/assets/image (74).png>)
+![](<.gitbook/assets/image (74) (1).png>)
 
 It's an executable program, lets change the permision and run it.
 
-![](<.gitbook/assets/image (75).png>)
+![](<.gitbook/assets/image (75) (1).png>)
 
 Flag: picoCTF{b1scu1ts\_4nd\_gr4vy\_18788aaa}
 
 ### Nice netcat...
 
-![](<.gitbook/assets/image (76).png>)
+![](<.gitbook/assets/image (76) (1).png>)
 
 Use netcat on terminal.
 
-![](<.gitbook/assets/image (77).png>)
+![](<.gitbook/assets/image (77) (1).png>)
 
 It gives numbers as output, let save it into txt.
 
-![](<.gitbook/assets/image (78).png>)
+![](<.gitbook/assets/image (78) (1).png>)
 
 Based on the hint, it's from ascii, lets decode it to text with this [website](https://convert.town/ascii-to-text).
 
@@ -612,17 +608,17 @@ Flag: **picoCTF{g00d\_k1tty!\_n1c3\_k1tty!\_d3dfd6df}**
 
 ### Static ain't always noise
 
-![](<.gitbook/assets/image (80).png>)
+![](<.gitbook/assets/image (80) (1).png>)
 
 The static is an exe program, change the permission and run it.
 
-![](<.gitbook/assets/image (81).png>)
+![](<.gitbook/assets/image (81) (1).png>)
 
 Lets see the other file ltdis.sh
 
-![](<.gitbook/assets/image (82).png>)
+![](<.gitbook/assets/image (82) (1).png>)
 
-It seems that this bash script is similar to `objdump` that is used to disassemble elf 64 files.&#x20;
+It seems that this bash script is similar to `objdump` that is used to disassemble elf 64 files.
 
 ![](<.gitbook/assets/image (83).png>)
 
@@ -634,15 +630,15 @@ Using `objdump -s` option, gave us the flag.
 
 ### Tab, Tab, Attack
 
-![](<.gitbook/assets/image (86).png>)
+![](<.gitbook/assets/image (86) (1).png>)
 
 Lets unzip it.
 
-![](<.gitbook/assets/image (87).png>)
+![](<.gitbook/assets/image (87) (1).png>)
 
 Lets use `cat` syntax to open the unzipped file.
 
-![](<.gitbook/assets/image (88).png>)
+![](<.gitbook/assets/image (88) (1).png>)
 
 flag: **picoCTF{l3v3l\_up!\_t4k18c}.**
 
@@ -652,13 +648,13 @@ flag: **picoCTF{l3v3l\_up!\_t4k18c}.**
 
 Lets connect to the ssh with the given credentials.
 
-![](<.gitbook/assets/image (91).png>)
+![](<.gitbook/assets/image (91) (1).png>)
 
 This challenge just taught us to use the basic `ls` and `cd` command in the terminal.
 
 {% file src=".gitbook/assets/Addadshashanammu.zip" %}
 
-![](<.gitbook/assets/image (92).png>)
+![](<.gitbook/assets/image (92) (1).png>)
 
 flag: **picoCTF{xxsh\_0ut0f\\/\\/4t3r\_21cac893}**
 
@@ -666,23 +662,21 @@ flag: **picoCTF{xxsh\_0ut0f\\/\\/4t3r\_21cac893}**
 
 ### What's your input?
 
-![](<.gitbook/assets/image (93).png>)
+![](<.gitbook/assets/image (93) (1).png>)
 
 Based on the hint lets see the python version of the file.
 
-![](<.gitbook/assets/image (94).png>)
+![](<.gitbook/assets/image (94) (1).png>)
 
 It was created with python2 which has vulnerability in the input() function. This is the main reason why people have converted to python3. We can exploit it using `import('os').system("put command here")` in the input.
 
-![](<.gitbook/assets/image (95).png>)
+![](<.gitbook/assets/image (95) (1).png>)
 
 flag: **picoCTF{v4lua4bl3\_1npu7\_8433797}**
 
 ### Binary Gauntlet 0
 
-![](<.gitbook/assets/image (96).png>)
-
-
+![](<.gitbook/assets/image (96) (1).png>)
 
 ### Stonks
 
@@ -690,17 +684,4 @@ flag: **picoCTF{v4lua4bl3\_1npu7\_8433797}**
 
 ## Conclusion
 
-Overall I really enjoyed the ctf. As a  solo player, I was able to learn a lot of things especially in reverse engineering and bin exp. Hopefully I will be able to solve more challenge in the upcoming CTFs.
-
-
-
-
-
-
-
-
-
-
-
-
-
+Overall I really enjoyed the ctf. As a solo player, I was able to learn a lot of things especially in reverse engineering and bin exp. Hopefully I will be able to solve more challenge in the upcoming CTFs.
