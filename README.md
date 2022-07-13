@@ -1,687 +1,378 @@
 ---
 description: >-
-  On 16th mac - 31th mac I participated in the picoctf 2021 competition as a
-  solo player. Here's some of my writeup for the challenges. Overall, I finished
-  on 348th / 6200 teams.
+  Bandit is one of the wargames category created by OverTheWire community
+  available at https://overthewire.org/wargames/. I decided to use Kali Linux
+  for this wargame.
+cover: https://www.slashfilm.com/img/gallery/wargames-reboot-teaser/intro-import.webp
+coverY: 0
 ---
 
-# Pico CTF 2021 Writeups
+# 💻 Bandit OverTheWire
 
-![](<.gitbook/assets/image (117) (1).png>)
+### Bandit 0
 
-![](<.gitbook/assets/image (118) (1).png>)
+![](<.gitbook/assets/image (10).png>)
 
-## **W**eb Exploitation
+For the this level, it wants us to connect to a host using SSH. SSH is a network protocol used to connect into another remote device. The details of the host is as below:
 
-### Ancient History
+* host: bandit.labs.overthewire.org
+* port: 2220
+* username: bandit0
+* password: bandit0
 
-![](<.gitbook/assets/Screenshot\_3 (7).png>)
+From these information we can use SSH which was already provided in Linux distribution to connect to the host with command `ssh bandit0@bandit.labs.overthewire.org -p 2220` then enter bandit0 as the password. We will be welcomed with OverTheWire page.
 
-We were given a website
+![](<.gitbook/assets/image (182).png>)
 
-![](<.gitbook/assets/Screenshot\_1 (11).png>)
+### Bandit 0-1
 
-After viewing the source
+![](<.gitbook/assets/image (161).png>)
 
-![](<.gitbook/assets/Screenshot\_2 (8).png>)
+The first level wants us to find a readme file and log into bandit1 using SSH. We use **ls** command  the files in the bandit0 directory and use **cat** or **strings** command on the readme file to get the content of the file which is the password for bandit2.
 
-Found the flag amongst the obfuscated code. **picoCTF{th4ts\_k1nd4\_n34t\_3bed1170}**
+![](<.gitbook/assets/image (233).png>)
 
-### GET aHEAD
+### Bandit 1-2
 
-![](.gitbook/assets/ah1.png)
+![](<.gitbook/assets/image (34).png>)
 
-We were given a website
+In Bandit 1-2, it wants us to read the content of a file with dash "**-**" as the filename. We cannot directly cat or strings the file as **-** is an argument that refers to the dev/stdin or dev/stdnout which is a [stream that are established when a Linux command is executed.](https://www.howtogeek.com/435903/what-are-stdin-stdout-and-stderr-on-linux/) To open file with dash "-" as the filename, we need to specify the full location using ** `/.`**
 
-![](.gitbook/assets/ah2.png)
+![](<.gitbook/assets/image (144).png>)
 
-Based on the challenge title, we should try get the website header either using curl or Burpsuite. curl command : `curl -X HEAD -i` [`http://mercury.picoctf.net:47967/`](http://mercury.picoctf.net:47967)\`\`
+### Bandit 2-3
 
-![](<.gitbook/assets/image (14) (1).png>)
+![](<.gitbook/assets/image (154).png>)
 
-and we got the flag from the header. **picoCTF{r3j3ct\_th3\_du4l1ty\_cca66bd3}**
-
-### Cookies
-
-![](<.gitbook/assets/image (15) (1).png>)
-
-![](<.gitbook/assets/image (16) (1).png>)
-
-The title and hint of the website talks about cookies, lets view the cookies using the in browser function.
-
-![](<.gitbook/assets/image (18) (1).png>)
-
-The current cookie value is -1, lets try changing it to 1and see if we get any output.
-
-![](<.gitbook/assets/image (19) (1).png>)
-
-Based on the output, we need to traverse and try different value of cookies to get the flag.
-
-![](<.gitbook/assets/image (20) (1).png>)
-
-And we got the flag on the 18 cookies. **picoCTF{3v3ry1\_l0v3s\_c00k135\_064663be}**
-
-### Scavenger Hunt
-
-![](<.gitbook/assets/image (22) (1).png>)
-
-![](<.gitbook/assets/image (23).png>)
-
-Seems like a normal html website, lets take a look at the source.
-
-![](<.gitbook/assets/image (24) (1).png>)
-
-It seems that this is a directory traversing challenge, we got the first part picoCTF{t from the source. It says the website was made from html,css and js. Lets take a look at those.
-
-![](<.gitbook/assets/image (27) (1).png>)
-
-Second part: h4ts\_4\_10
-
-![](<.gitbook/assets/image (25) (1).png>)
-
-We found a js script, lets open it.
-
-![](<.gitbook/assets/image (26) (1).png>)
-
-From the hint, we can guess the next part is in robots.txt that is used to configure crawler from accessing certain directory of the website.
-
-![](<.gitbook/assets/image (28) (1).png>)
-
-3rd part: t\_0f\_pl4c
-
-![](<.gitbook/assets/image (29) (1).png>)
-
-4th part: 3s\_2\_100k
-
-![](<.gitbook/assets/image (30) (1).png>)
-
-5th part: \_f7ce8828} . flag: **picoCTF{th4ts\_4\_10t\_0f\_pl4c3s\_2\_100k\_f7ce8828}**
-
-### Who are you?
-
-![](<.gitbook/assets/image (31) (1).png>)
-
-![](<.gitbook/assets/image (33) (1).png>)
-
-Opening the website told us that we can only access it with picobrowser. From reading past writeup, it seems that we need to change the user agent to access it. We use the curl command : `curl -A "PicoBrowser" http://mercury.picoctf.net:46199` to change the user agent.
-
-![](<.gitbook/assets/image (34) (1).png>)
-
-From the website, it asks us to visit the website, from the website itself. We can use curl command : `curl -A "PicoBrowser" http://mercury.picoctf.net:46199/ -H "Referer: http://mercury.picoctf.net:46199"`
-
-![](<.gitbook/assets/image (35) (1).png>)
-
-Next it asks us to access the website from 2018. We can modify the time header through: `curl -A "PicoBrowser" http://mercury.picoctf.net:46199/ -H "Referer: http://mercury.picoctf.net:46199" -H "Date: Wed 17 Mar 2018 02:47:59 GMT"`
-
-![](<.gitbook/assets/image (36) (1).png>)
-
-Now it asks us to send request without being tracked. We can use the DNT(Do Not Track) header curl command: `curl -A "PicoBrowser" http://mercury.picoctf.net:46199/ -H "Referer: http://mercury.picoctf.net:46199" -H "Date: Wed 17 Mar 2018 02:47:59 GMT" -H "DNT: 1"`
-
-![](<.gitbook/assets/image (37) (1).png>)
-
-Now it only allows people from Sweden. We just need to use a sweden ip and X-Forwarded-For header to foward our curl request ip. `curl -A "PicoBrowser" http://mercury.picoctf.net:46199/ -H "Referer: http://mercury.picoctf.net:46199" -H "Date: Wed 17 Mar 2018 02:47:59 GMT" -H "DNT: 1" -H "X-Forwarded-For:193.150.233.115"`
-
-![](<.gitbook/assets/image (38) (1).png>)
-
-Now it also want us to speak in Sweden. We just need to change the language header using the syntax: `curl -A "PicoBrowser" http://mercury.picoctf.net:46199/ -H "Referer: http://mercury.picoctf.net:46199" -H "Date: Wed 17 Mar 2018 02:47:59 GMT" -H "DNT: 1" -H "X-Forwarded-For:193.150.233.115" -H 'Accept-LAnguage: sv'`
-
-![](<.gitbook/assets/image (39) (1).png>)
-
-And we finally got the flag. **picoCTF{http\_h34d3rs\_v3ry\_c0Ol\_much\_w0w\_8d5d8d77}**
-
-### Some Assembly Required 1
+In Bandit 3, the challenge asks us to read the content of file called "spaces in this filename". To read any file with spaces, we need to include backslash "\\" after each word .
 
 ![](<.gitbook/assets/image (40).png>)
 
-![](<.gitbook/assets/image (41) (1).png>)
+### Bandit 3-4
 
-This challenge is straight forward. We just need to look for the wasm files in the debugger browser function to get the flag. **picoCTF{8857462f9e30faae4d037e5e25fee1ce}**
+![](<.gitbook/assets/image (255).png>)
 
-### It is my birthday
+Bandit 3-4 ask us to read the content of a file that is hidden in the inhere directory. We can use `ls -la` to display every file in the directory including file starting with .
 
-![](<.gitbook/assets/image (42).png>)
+![](<.gitbook/assets/image (177).png>)
 
-This challenge is about the md5 hash collision that makes it unsecure.
+![](<.gitbook/assets/image (238).png>)
 
-![](<.gitbook/assets/image (43) (1).png>)
+### Bandit 4-5
 
-The website requires us to upload two different pdf files with the same hashes. It also has an upload limit not allowing for more than 100kbs files. By using this [website](https://www.mscs.dal.ca/\~selinger/md5collision/), we got two exe program with md5 hash collision.
+![](<.gitbook/assets/image (39).png>)
 
-![](<.gitbook/assets/image (44) (1).png>)
+This challenge ask us to read the only human readable file in the inhere directory. We can use `strings` command to do this. Since there are multiple file in the directory we can combine `strings` with `*` symbol. `*`  is a symbol that stands for everything linux distribution.
 
-Now since the php script only requires the uploaded files to have .pdf extension, we can just rename the files and add .pdf before uploading it.
+![](<.gitbook/assets/image (256).png>)
 
-![](<.gitbook/assets/image (45) (1).png>)
+### Bandit 5-6
 
-![](<.gitbook/assets/image (46) (1).png>)
+![](<.gitbook/assets/image (3).png>)
 
-And we got the flag. **picoCTF{c0ngr4ts\_u\_r\_1nv1t3d\_73b0c8ad}**
+In Bandit 5-6, the challenge ask us to read the content of a file with a specific details including:
 
-### Most cookies
+* human readable
+* 1033 byte
+* not executable
 
-![](<.gitbook/assets/image (48) (1).png>)
+We can use the `find` command with option `-type` and `-size` to specify the details of the file. You can read more about any command in Linux from the [manpages](https://man7.org/linux/man-pages/man1/find.1.html) with command `man find.` Type f stands file and size 1033c stands for 1033 bytes.
 
-This challenge is about cookie forging. We were given a website and the server source code.
+![](<.gitbook/assets/image (30).png>)
 
-![](<.gitbook/assets/image (49) (1).png>)
+### Bandit 6-7
 
-From the challenge description, we know that the website uses flask cookies. Flask cookie was made by using a 'secret key' to ensure it's secure. Let's see the value of the cookie using [flask-unsign](https://github.com/Paradoxis/Flask-Unsign).
+![](<.gitbook/assets/image (190).png>)
 
-![](<.gitbook/assets/image (50) (1).png>)
+In Bandit 6-7 the challenge as us to find a file with these details:
 
-Here we can see that the value is blank. However from the source code server.py, we can see that in order to get the flag, we need to set it to admin.
+* can be anywhere on host device
+* owned by use bandit7
+* owned by group bandit6
+* 33 bytes size
 
-![](<.gitbook/assets/image (51) (1).png>)
+We can also use `find` command with different option for this challenge. Option `-user` and `-group` is used to specify which user the file is owned by. We use command `find` in `/` since it is the root of all directory.&#x20;
 
-Before continue to forge it, we need to find the secret key of the flask cookie.
+![](<.gitbook/assets/image (204).png>)
 
-![](<.gitbook/assets/image (52) (1).png>)
-
-Here we can see that the secret key is chosen randomly from a list. We can bruteforce the wordlist by using [`flask-unsign`](https://github.com/Paradoxis/Flask-Unsign) feature.
-
-![](<.gitbook/assets/image (53).png>)
-
-![](<.gitbook/assets/image (54) (1).png>)
-
-From the bruteforce, we found out the secret key is butter. Now we can forge a new cookie with value:admin and secret key: butter.
-
-![](<.gitbook/assets/image (55).png>)
-
-Now change the cookie value on the browser to get the flag.
-
-![](<.gitbook/assets/image (56).png>)
-
-flag: **picoCTF{pwn\_4ll\_th3\_cook1E5\_743c20eb}**
-
-## Cryptography
-
-### Pixelated
-
-![](.gitbook/assets/Pixelated.png)
-
-For this challenge we were given two images that seems to be made out of statics.
-
-![1st image](.gitbook/assets/scrambled1.png)
-
-![2nd image](.gitbook/assets/scrambled2.png)
-
-I treated this challenge as steganography and used [StegSolve](https://github.com/eugenekolo/sec-tools/tree/master/stego/stegsolve) to combine both images to produce an output.
-
-![](.gitbook/assets/Screenshot\_1.png)
-
-After combining both and using the ADD function we can see the flag **picoCTF{0542dc1d).**
-
-### Mod 26
-
-![](<.gitbook/assets/image (57) (1).png>)
-
-It's a simple rot13 encryption. Let's use [CyberChef](https://gchq.github.io/CyberChef/#recipe=ROT13\(true,true,false,13\)\&input=Y3ZwYlBHU3thcmtnX2d2enJfVid5eV9nZWxfMl9lYmhhcWZfYnNfZWJnMTNfR1lwWE9IcVh9) to decrypt it.
-
-![](<.gitbook/assets/image (58) (1).png>)
-
-flag: **picoCTF{next\_time\_I'll\_try\_2\_rounds\_of\_rot13\_TLcKBUdK}**
-
-### Mind you Ps and Qs
-
-![](<.gitbook/assets/image (59).png>)
-
-It's is the usual RSA challenge.
-
-![](<.gitbook/assets/image (60) (1).png>)
-
-We have to decrypt it based on the value given. I'm not good at math and just use[ rsactftool](https://github.com/Ganapati/RsaCtfTool) to decrypt it.
-
-![](<.gitbook/assets/image (61) (1).png>)
-
-flag: **picoCTF{sma11\_N\_n0\_g0od\_23540368}**
-
-### Dacshund Attacks
-
-![](<.gitbook/assets/image (62) (1).png>)
-
-![](<.gitbook/assets/image (63).png>)
-
-In this challenge we were given e,n and c value. The d value can be calculated by yourself. Based on the challenge we know that d has a small value meaning it is vulnerable to the[ wiener attack](https://en.wikipedia.org/wiki/Wiener's\_attack). We can use rsactftool again to decrypt it.
-
-![](<.gitbook/assets/image (64) (1).png>)
-
-Flag: **picoCTF{proving\_wiener\_1146084}**
-
-### Play Nice
-
-![](<.gitbook/assets/image (65) (1).png>)
-
-![](<.gitbook/assets/image (66) (1).png>)
-
-This is just a playfair cipher. We can use [https://www.dcode.fr/playfair-cipher](https://www.dcode.fr/playfair-cipher) to decrypt it.
-
-![](<.gitbook/assets/image (67) (1).png>)
-
-Enter the plaintext into netcat.
-
-![](<.gitbook/assets/image (68) (1).png>)
-
-flag: **picoCTF{2e71b99fd3d07af3808f8dff2652ae0e}**
-
-## Reverse Engineering
-
-### Transformation
-
-![](<.gitbook/assets/image (97) (1).png>)
-
-![](<.gitbook/assets/image (98) (1).png>)
-
-Opening the file, it looks some kind of unicode characters. I proceed to use [CyberChef](https://gchq.github.io/CyberChef) magic feature to see if it can decrypt it. By putting picoCTF in the crib, we were able to decode it.
-
-![](<.gitbook/assets/image (99) (1).png>)
-
-**picoCTF{16\_bits\_inst34d\_of\_8\_26684c20}**
-
-### keygenme-py
-
-![](<.gitbook/assets/image (100).png>)
-
-![](<.gitbook/assets/image (101) (1).png>)
-
-Looking at the source code, we only need to find the key\_part\_dynamic\_1trial part of the flag.
-
-![](<.gitbook/assets/image (102).png>)
-
-Looking at the source, we can see that the dynamic key is taken from the certain value of hexdigest of the username which is GOUGH. We can write a short python script to print it.
-
-![](<.gitbook/assets/image (103) (1).png>)
-
-The full flag: **picoCTF{1n7h3|<3y\_of\_f911a486}**
-
-### crackme
-
-![](<.gitbook/assets/image (104).png>)
-
-![](<.gitbook/assets/image (105).png>)
-
-From the source code, we can see the the program uses ROT47 to encode and decode their bezos\_cc\_secret. We can use [CyberChef](https://gchq.github.io/CyberChef) to decode it.
-
-![](<.gitbook/assets/image (106).png>)
-
-Flag: **picoCTF{1|\\/|\_4\_p34||ut\_4593da8a}.**
-
-### speeds and feeds
-
-![](<.gitbook/assets/image (107).png>)
-
-Lets use netcat and save the output.
-
-![](<.gitbook/assets/image (108).png>)
-
-![](<.gitbook/assets/image (109) (1).png>)
-
-From the hint, we know that it is from[ CNC machine](https://www.steckermachine.com/blog/g-code-m-code) which uses G-code as the programming language. After some googling, I found this [https://ncviewer.com/](https://ncviewer.com) which can be used to plot the G-code language.
-
-![](<.gitbook/assets/image (110) (1).png>)
-
-flag: **picoCTF{num3r1cal\_c0ntr0l\_f3fea95b}.**
-
-### Shop
-
-![](<.gitbook/assets/image (111) (1).png>)
-
-![](<.gitbook/assets/image (112) (1).png>)
-
-In this challenge, we have to exploit the fact that there the programmer did not implement any edge cases in the coin system of the market. We can input any value into the coin such as negative to exploit it.
-
-![](<.gitbook/assets/image (113) (1).png>)
-
-The flag is encrypted with ascii. Decode it using [https://convert.town/ascii-to-text](https://convert.town/ascii-to-text).
-
-![](<.gitbook/assets/image (114) (1).png>)
-
-Flag: **picoCTF{b4d\_brogrammer\_797b292c}**.
-
-## Forensics
-
-### Information
-
-![](<.gitbook/assets/Screenshot\_4 (1).png>)
-
-In this challenge we were given an image and the hint says something regarding information.
-
-![](.gitbook/assets/cat.jpg)
-
-So I just try to see the metadata of the image using exiftool.
-
-![](<.gitbook/assets/Screenshot\_2 (1).png>)
-
-Looking at the license data, it looks like a base 64 string. Lets try decrypting it with [CyberChef](https://gchq.github.io/CyberChef).
-
-![](<.gitbook/assets/Screenshot\_3 (1).png>)
-
-And we got the flag **picoCTF{the\_m3tadatais\_modified}.**
-
-### Weird File
-
-![](.gitbook/assets/Screenshot\_5.png)
-
-In this challenge we were given a Word document with a hint that there are some shell or macro in the file.
-
-![](<.gitbook/assets/Screenshot\_1 (4).png>)
-
-We're also given a youtube [video ](https://www.youtube.com/watch?v=Y7IJjnLGqTQ)that talks about macros in docx file. In the video it shows that we can use[ olevba](https://github.com/decalage2/oletools/wiki/olevba) to extract macros source code from word and ppt files.
-
-![](<.gitbook/assets/Screenshot\_1 (1).png>)
-
-From the extracted macros source, we can see that the embedded script is trying to print a line of strings that seems to be encoded in base 64.
-
-```
-$ echo cGljb0NURnttNGNyMHNfcl9kNG5nM3IwdXN9 | base64 -d                                                        1 ⨯
-picoCTF{m4cr0s_r_d4ng3r0us}                                                                                                                     
-```
-
-After decoding it, we got the flag **picoCTF{m4cr0s\_r\_d4ng3r0us}**.
-
-### Matryoshka doll
-
-![](<.gitbook/assets/Screenshot\_3 (2).png>)
-
-This is matryoshka doll challenge in which we have to extract data from image multiple times to get the flag.
-
-![](.gitbook/assets/dolls\(1\).jpg)
-
-So lets binwalk the image to extract the data a couple times.
-
-![](<.gitbook/assets/Screenshot\_2 (2).png>)
-
-After a couple times we got the flag.
-
-![](<.gitbook/assets/Screenshot\_4 (2).png>)
-
-**picoCTF{336cfd51c9d9774fd37196c1d7320ff}.**
-
-### Wireshark doo dooo do doo...
-
-![](<.gitbook/assets/Screenshot\_5 (1).png>)
-
-In this challenge we were given a pcap file, lets open it with wireshark.
-
-![](<.gitbook/assets/Screenshot\_1 (5).png>)
-
-I didnt find anything by trying to follow the packet so next I try to export the objects from the pcap.
-
-![](<.gitbook/assets/Screenshot\_2 (3).png>)
-
-Then, I tried opening some of the files and found a string that seems like it has been encoded with Caesar Cipher.
-
-![](<.gitbook/assets/image (1) (1).png>)
-
-So we can try decoding it either using some website such as [dcode.fr ](https://www.dcode.fr)or using python script from [github](https://github.com/rhamaa/Caesar-Cipher-Brute-Force/blob/master/caesar\_brute.py):
-
-![](<.gitbook/assets/image (5) (1).png>)
-
-The flag is **picoCTF{p33kab00\_**_**1\_s33\_u\_deadbeef}**._
-
-### Macrohard WeakEdge
-
-![](.gitbook/assets/Screenshot\_6.png)
-
-At first I thought this challenge was similar to weird file and tried to extract macro data from the file using olevba, however I didnt manage to get any useable output from it.
-
-![](<.gitbook/assets/Screenshot\_4 (4).png>)
-
-Then I remembered that ppt files are just made up from a bunch of files. I performed binwalk on it to extract the data.
-
-![](<.gitbook/assets/Screenshot\_1 (8).png>)
-
-And after scouring around in the files, I manages to get a string that looks like it has been encoded.
-
-![](<.gitbook/assets/Screenshot\_2 (6).png>)
-
-Since caesar cipher didn't work, I just put the strings into CyberChef and it automatically detected that it was from base64 and got the flag.
-
-![](<.gitbook/assets/Screenshot\_3 (5).png>)
-
-flag: **picoCTF{D1d\_u\_kn0w\_ppts\_r\_z1p5}**
-
-### Trivial Flag Transfer Protocol
-
-![](<.gitbook/assets/Screenshot\_5 (3).png>)
-
-In this challenge we have to work with a pcap file. The title says something about ftp. As usual lets try opening it in wireshark and export the ftp objects from the pcap.
-
-![](<.gitbook/assets/Screenshot\_1 (9).png>)
-
-We manages to get 2 strings files and 3 pictures.
-
-![](<.gitbook/assets/image (7) (1).png>)
-
-Seems like it is encoded with caesar cipher. After decoding it, the instruction says:
-
-> TFTPDOESNTENCRYPTOURTRAFFICSOWEMUSTDISGUISEOURFLAGTRANSFER.FIGUREOUTAWAYTOHIDETHEFLAGANDIWILLCHECKBACKFORTHEPLAN
-
-and the plan:
-
-> IUSEDTHEPROGRAMANDHIDITWITH-DUEDILIGENCE.CHECKOUTTHEPHOTOS
-
-After that, lets open the program.deb
-
-![](<.gitbook/assets/Screenshot\_3 (6).png>)
-
-It seems that one of the image contains a hidden flag and they used [steghide](https://github.com/StefanoDeVuono/steghide) to hid it with the key:DUEDILIGENCE.
+There are lots of directory that does not allow bandit6 `user` to open or scan the directory, however from all of the search result, we have one file that fit all the description.
 
 ![](<.gitbook/assets/image (9).png>)
 
-After trying steghide on all 3 pictures, we finally get an output on the third image.
+### Bandit 7-8
 
-![](<.gitbook/assets/image (10) (1).png>)
+![](<.gitbook/assets/image (57).png>)
 
-flag: **picoCTF{h1dd3n\_1n\_pLa1n\_51GHT\_18375919}**
+In bandit 7-8 the challenge ask us to find the password in a file called data.txt. The detail of the password is it is next to the word millionth. We can use the [`grep`](https://linuxcommand.org/lc3\_man\_pages/grep1.html) command to find the word millionth in the file.
 
-### Wireshark two twooo two twoo ..
+![](<.gitbook/assets/image (136).png>)
 
-![](<.gitbook/assets/image (12) (1).png>)
+### Bandit 8-9
 
-This challenge was quite guessy and time consuming. We were given a pcap file. However after trying the usual follow packets and export objects, I only found fake flags. I saw someone mentions using NetworkMiner in the discord server and tried it.
+![](<.gitbook/assets/image (240).png>)
 
-![](.gitbook/assets/1.png)
+Bandit 8-9 challenge ask us to find the password in a file called data.txt. The password is the only line of text that occurs only once in the file. We can use cat and pipe it with sort and uniq command to get the password.&#x20;
 
-After some times of taking a look at how it categorize each packets, I noticed something weird at the server and ip ttl value of some packets.
-
-![](.gitbook/assets/7.png)
-
-I then tried following one of the packets and it gave a website: [http://reddshrimpandherring.com/](http://reddshrimpandherring.com) brought me to a website that give something like a flag.
-
-![](.gitbook/assets/3.png)
-
-However after decoding it to base64 and submitting, it seems that it was a fake flag such as suggested by the site name itself.
-
-![](.gitbook/assets/sa.png)
-
-Then I take a look back at the packets and notice that before the website, each of the packets have a different strings that looks like a base64 encoded strings. I then tried to decode one of the strings.
-
-![](.gitbook/assets/6.png)
-
-And indeed it produce part of the flag.
-
-![](.gitbook/assets/9.png)
-
-After collecting all of the strings from the packets, we got the flag. **picoCTF{dns\_3xf1l\_ftw\_deadbeef}.**
-
-### Disk, Disk sleuth! II
-
-![](.gitbook/assets/Screenshot\_4.png)
-
-The challenge gave us an image that can be mounted with a hint that the flag is stored a file called 'down-at-the-bottom.txt'. Rather than using sleuthkit as suggested, I just use binwalk to extract all the files in the image and find the file with the flag manually.
-
-![](.gitbook/assets/Screenshot\_2.png)
-
-![](.gitbook/assets/Screenshot\_3.png)
-
-Manages to found the flag file in the root directory. The flag is **picoCTF{f0r3ns1c4t0rn0v1c30ba8d02d}.**
-
-### Milkslap
-
-![](<.gitbook/assets/Screenshot\_3 (4).png>)
-
-This was rather a stego challenge. We were given a link to a website and it looks like a script has been made to produce an output of gif from several images.
-
-![](<.gitbook/assets/Screenshot\_1 (7).png>)
-
-After saving the image, I started performing the usual ctf tools: strings, stegsolve, binwalk and view hex. And then after using [zsteg](https://github.com/zed-0xff/zsteg), we manages to get output of the flag from one of the lsb.
-
-![](<.gitbook/assets/Screenshot\_2 (5).png>)
-
-The flag is **picoCTF{imag3\_m4n1pul4t10n\_sl4p5}.**
-
-### tunn3l v1s1on
-
-![](<.gitbook/assets/Screenshot\_5 (2).png>)
-
-This was rather a quite hard and guessy challenge for me. In this challenge we were give a file. After looking at the header I was able to determine that it was a .bmp image.
-
-![](<.gitbook/assets/Screenshot\_2 (4).png>)
-
-I then proceed to try opening the image using image magick display since windows program was unable to open it directly.
-
-![](<.gitbook/assets/Screenshot\_1 (6).png>)
-
-From the displayed image, we can guess that this image hex value has been altered and not showing the whole picture.
-
-![](<.gitbook/assets/image (6) (1).png>)
-
-After some times of reading the bitmap information from this[ website](http://www.ece.ualberta.ca/\~elliott/ee552/studentAppNotes/2003\_w/misc/bmp\_file\_format/bmp\_file\_format.htm), I started to try and change the hex value of the image. After several days of break and taking a look back, I was able to produce the full image though the colors are not fully correct by changing these offset: 00Ah, 0012h and 0016h.
-
-![](<.gitbook/assets/Screenshot\_3 (3).png>)
-
-And the image we got is:
-
-![](.gitbook/assets/adas.bmp)
-
-The flag is: **picoCTF{qu1t3\_a\_v13w\_2020}.** This challenge taught me a lot about bitmap and how it was actually structured, I do think it deserve more points than most of the forensic challenges.
-
-## General Skills
-
-### Obedient Cat
-
-![](<.gitbook/assets/image (69) (1).png>)
-
-As the challenge name suggest, just use the cat syntax on the flag file.
-
-![](<.gitbook/assets/image (70) (1).png>)
-
-flag: **picoCTF{s4n1ty\_v3r1f13d\_28e8376d}**
-
-### Python Wrangling
-
-![](<.gitbook/assets/image (71) (1).png>)
-
-Download the files, and use python to open them: `python3 ende.py -d flag.txt.en`
-
-![](<.gitbook/assets/image (72).png>)
-
-### Wave a flag
-
-![](<.gitbook/assets/image (73).png>)
-
-![](<.gitbook/assets/image (74) (1).png>)
-
-It's an executable program, lets change the permision and run it.
-
-![](<.gitbook/assets/image (75) (1).png>)
-
-Flag: picoCTF{b1scu1ts\_4nd\_gr4vy\_18788aaa}
-
-### Nice netcat...
-
-![](<.gitbook/assets/image (76) (1).png>)
-
-Use netcat on terminal.
-
-![](<.gitbook/assets/image (77) (1).png>)
-
-It gives numbers as output, let save it into txt.
-
-![](<.gitbook/assets/image (78) (1).png>)
-
-Based on the hint, it's from ascii, lets decode it to text with this [website](https://convert.town/ascii-to-text).
-
-![](<.gitbook/assets/image (79).png>)
-
-Flag: **picoCTF{g00d\_k1tty!\_n1c3\_k1tty!\_d3dfd6df}**
-
-### Static ain't always noise
-
-![](<.gitbook/assets/image (80) (1).png>)
-
-The static is an exe program, change the permission and run it.
-
-![](<.gitbook/assets/image (81) (1).png>)
-
-Lets see the other file ltdis.sh
-
-![](<.gitbook/assets/image (82) (1).png>)
-
-It seems that this bash script is similar to `objdump` that is used to disassemble elf 64 files.
-
-![](<.gitbook/assets/image (83).png>)
-
-Using `objdump -s` option, gave us the flag.
-
-![](<.gitbook/assets/image (85).png>)
-
-**picoCTF{d15a5m\_t34s3r\_ccb2b43e}.**
-
-### Tab, Tab, Attack
-
-![](<.gitbook/assets/image (86) (1).png>)
-
-Lets unzip it.
-
-![](<.gitbook/assets/image (87) (1).png>)
-
-Lets use `cat` syntax to open the unzipped file.
-
-![](<.gitbook/assets/image (88) (1).png>)
-
-flag: **picoCTF{l3v3l\_up!\_t4k18c}.**
-
-### Magikarp Ground Mission
-
-![](<.gitbook/assets/image (90).png>)
-
-Lets connect to the ssh with the given credentials.
-
-![](<.gitbook/assets/image (91) (1).png>)
-
-This challenge just taught us to use the basic `ls` and `cd` command in the terminal.
-
-{% file src=".gitbook/assets/Addadshashanammu.zip" %}
-
-![](<.gitbook/assets/image (92) (1).png>)
-
-flag: **picoCTF{xxsh\_0ut0f\\/\\/4t3r\_21cac893}**
-
-## Binary Exploitation
-
-### What's your input?
-
-![](<.gitbook/assets/image (93) (1).png>)
-
-Based on the hint lets see the python version of the file.
-
-![](<.gitbook/assets/image (94) (1).png>)
-
-It was created with python2 which has vulnerability in the input() function. This is the main reason why people have converted to python3. We can exploit it using `import('os').system("put command here")` in the input.
-
-![](<.gitbook/assets/image (95) (1).png>)
-
-flag: **picoCTF{v4lua4bl3\_1npu7\_8433797}**
-
-### Binary Gauntlet 0
-
-![](<.gitbook/assets/image (96) (1).png>)
-
-### Stonks
+[Sort](https://man7.org/linux/man-pages/man1/sort.1.html) command is used to arrange the record of a file in a particular order so that the repeating line is sorted together while [uniq](https://www.geeksforgeeks.org/uniq-command-in-linux-with-examples/) command with option -u is used to print the only non repeating line in the file. The full command is `cat data.txt|sort|uniq -u` .
 
 ![](<.gitbook/assets/image (115).png>)
 
-## Conclusion
+### Bandit 9-10
 
-Overall I really enjoyed the ctf. As a solo player, I was able to learn a lot of things especially in reverse engineering and bin exp. Hopefully I will be able to solve more challenge in the upcoming CTFs.
+![](<.gitbook/assets/image (90).png>)
+
+In bandit 9-10, the challenge ask us to find the password in data.txt with these details:
+
+* human readable
+* starts with = characters
+
+From these details we can use the strings command to list out the readable strings and pipe it with grep to take out the strings starting with =.
+
+![](<.gitbook/assets/image (65).png>)
+
+### Bandit 10-11
+
+![](<.gitbook/assets/image (72).png>)
+
+In Bandit 10-11 it asks us to read a base64 encoded file. Base64 is a binary to ASCII encoding scheme that is used to obfuscate, hash data etc. A base64 encoded data will usually end with ==. We can use the base64 decoding tools in kali linux distribution to decode the file with cat and pipe it with base64 decoder. `cat data.txt | base64 -d.`
+
+![](<.gitbook/assets/image (216).png>)
+
+### Bandit 11-12
+
+![](<.gitbook/assets/image (167).png>)
+
+For bandit 11-12 the challenge asks us to decode a file which has been rotated by 13 positions. This encoding is also known as [Rot13](https://en.wikipedia.org/wiki/ROT13). To put it simply, ROT 13 is a substitution cipher that works by offset the alphabet by 13 places.
+
+*   Encode: &#x20;
+
+    ```
+    tr 'A-Za-z' 'N-ZA-Mn-za-m'
+    ```
+*   Decode:&#x20;
+
+    ```
+    tr 'N-ZA-Mn-za-m' 'A-Za-z'
+    ```
+
+![](<.gitbook/assets/image (200).png>)
+
+### Bandit 12-13
+
+![](<.gitbook/assets/image (66).png>)
+
+For Bandit 12-13, the password is stored in the file data.txt which is a hexdump of file that has been compressed repeatedly. Hexdump is a hexadecimal view of computer data. The details of the file is as below:
+
+* Hexdump data&#x20;
+* Repeatedly compressed
+
+![](<.gitbook/assets/image (264).png>)
+
+To change and work on the file, we need to move it somewhere we have permission to such as /tmp. After creating a new directory in tmp using mkdir, we can copy the file into the directory and start working on it. First, we can use [xxd ](https://linux.die.net/man/1/xxd)to reverse the hexdump file to its original binary. Then, using file command we can figure out the type of file. It seems the original file is called data2.bin which is a gzip compressed data.
+
+![](<.gitbook/assets/image (112).png>)
+
+We can use bzip2 to deflate the gzip compression. We do this process for two more time till we get the data4 file which is a tar archive. To deflate tar archive files, we can use tar xvf.&#x20;
+
+![](<.gitbook/assets/image (43).png>)
+
+After repeatedly deflating more files, we finally get data8 file which is the original file with password.
+
+![](<.gitbook/assets/image (209).png>)
+
+### Bandit 13-14
+
+![](<.gitbook/assets/image (14).png>)
+
+For bandit 13-14 the challenge asks us to log into the SSH using a private SSH key. From the SSH manpage, we can use -i option to use the private key and connect to the server.
+
+![](<.gitbook/assets/image (110).png>)
+
+The full command is `ssh -i sshkey.private bandit14@bandit.labs.overthewire.org -p 2220/`
+
+![](<.gitbook/assets/image (207).png>)
+
+Then we can cat the password in /etc/bandit\_pass/bandit14.
+
+![](<.gitbook/assets/image (159).png>)
+
+### Bandit 14-15
+
+![](<.gitbook/assets/image (7).png>)
+
+For bandit 14-15, the challenge wants us to submit the password of current level to port 30000 on localhost(bandit14). To do this we can use [netcat](https://en.wikipedia.org/wiki/Netcat), a tool to read and writes data using tcp or udp protocol, it is also used for port listening. It works by creating a socket from server to client, once connected, the client and server can send data to each other. To use netcat in linux we use the nc command, `nc localhost 30000`.
+
+![](<.gitbook/assets/image (48).png>)
+
+### Bandit 15-16
+
+![](<.gitbook/assets/image (19).png>)
+
+For bandit 15-16, the challenge wants us to submit the password of current level to port 30001 using ssl encryption. We can use [OpenSSL](https://en.wikipedia.org/wiki/OpenSSL), a cryptography library that offers open-source application of the TLS protocol for this process. From the [man page](https://linux.die.net/man/1/openssl), we can use option s\_client to establish a ssl/tls encryption and option -connect to specify the target and port.&#x20;
+
+![](<.gitbook/assets/image (205).png>)
+
+After the connection is established, we can enter the password for current level to get the password.
+
+![](<.gitbook/assets/image (28).png>)
+
+### Bandit 16-17
+
+![](<.gitbook/assets/image (164).png>)
+
+Fort bandit 16-17 the challenge wants us to submit the password for current level to a port on localhost. The details of the port are:
+
+* between 31000 to 32000
+* uses SSL&#x20;
+* will reply with credentials&#x20;
+
+To scan for the active port between 31000 to 32000, we can use [nmap](https://nmap.org/) a powerful port scanning tool. We can specify the range of port we wanted to scan using -p option.
+
+![](<.gitbook/assets/image (195).png>)
+
+From the results, we get six active port. To figure out which one uses ssl, we can use OpenSSL the same way from the previous level. Keep trying to connect onto all the port to find out which one will give us the credentials.
+
+![](<.gitbook/assets/image (214).png>)
+
+Finally on the port 31790 we finally get a port that uses ssl encryption. After submitting the password for the current level to the port, the server will reply with a ssh private key for the next level.
+
+![](<.gitbook/assets/image (180).png>)
+
+### Bandit 17-18
+
+![](<.gitbook/assets/image (116).png>)
+
+Fort bandit 17-18 it wants us to find a the only line that has been changed between two files, passwords.old and passwords.new. We can use command diff, to compare both files and find the differences and get the password.
+
+![](<.gitbook/assets/image (151).png>)
+
+### Bandit 18-19
+
+![](<.gitbook/assets/image (267).png>)
+
+This is the first challenge that took me a while to get through. So whenever we start a bash shell, a .bashrc file will be run on that shell. For this challenge, the .bashrc file has been modified to log us out whenever we tried to login meaning we wont be able to cat the readme file.
+
+![](<.gitbook/assets/image (125).png>)
+
+The first thing I thought is to login as bandit17 and try to modify the .bashrc file in bandit18 home directory. However,  the file can only be read or write by user bandit19.
+
+![](<.gitbook/assets/image (248).png>)
+
+Then I googled ".bashrc prevent from login" and found a similar question on [serverfault.com](https://serverfault.com/questions/94503/login-without-running-bash-profile-or-bashrc). From this forum it seems that we can avoid using bash shell through:
+
+* using ssh -t option and /bin/sh, this option will spawn a pseudo-terminal shell instead of an interactive shell. There are a couple different shell provided in a linux distributon and /bin/sh is one of them. By using -t and /bin/sh we will avoid spawning the bash shell and thus will not use the .bashrc configuration.
+
+![](<.gitbook/assets/image (140).png>)
+
+From here, we will get a simple but still interactive sh shell and cat the passsword.
+
+![](<.gitbook/assets/image (8).png>)
+
+### Bandit 19-20
+
+![](<.gitbook/assets/image (203).png>)
+
+For bandit 19-20 it taught us about the setuid or also known as set user id. By invoking an executable setuid, we gain the priviledge of another user. In this challenge, we were able to gain the priviledge of user bandit20 and read the password through the setuid.
+
+![](<.gitbook/assets/image (193).png>)
+
+### Bandit 20-21
+
+![](<.gitbook/assets/image (82).png>)
+
+For bandit 20-21, it gave us an executable setuid that does these:
+
+* makes a connection to localhost port that we specify
+* read a line of text from the port and compares it to previous password
+* if the password is correct, it replies the password for next level
+
+From my understanding this is what we need to do in order to get the password:
+
+1. Use netcat to listen to a port on localhost
+2. Enter the previous password&#x20;
+3. On another screen in the same ssh session, execute the setuid to the port
+
+The only problem I have is not knowing how to have different shell or screen in the same ssh session. From this [post ](https://askubuntu.com/questions/332104/open-another-terminal-window-with-the-same-ssh-session-as-original-window)I find out that there are several ways to do this including using screen, tmux and gnome-terminal. First, I typed tmux and open another shell. Now, using the main shell, I can listen to a port on localhost with command `nc -l localhost -p 1111.`
+
+![](<.gitbook/assets/image (178).png>)
+
+Then, I press `Ctrl + A` to go to tmux shell and execute the setuid to port 1111.
+
+![](<.gitbook/assets/image (63).png>)
+
+Going back to the main shell, I can see the password fo the next level.
+
+![](<.gitbook/assets/image (170).png>)
+
+### Bandit 21-22
+
+![](<.gitbook/assets/image (35).png>)
+
+Bandit 21-22 taught us about cron, a tool to schedule job at specific times. By going to /etc/cron.d/ we were able to find cronjob for user bandit22. This is what the cronjob does:
+
+* Every time bandit22 reboot, it will execute a script from /usr/bin/cronjob\_bandit22.sh and then send it to /dev/null to discard it.
+
+The script simply gives permission to other user to only read the file /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv, the password for bandit22 has also been copied to the file.
+
+![](<.gitbook/assets/image (24).png>)
+
+We can gain the password by using cat on the file.
+
+![](<.gitbook/assets/image (97).png>)
+
+### Bandit 22-23
+
+![](<.gitbook/assets/image (51).png>)
+
+For bandit 22-23, it ask us to do same thing as the previous level. Using cat on the cron script for bandit23 we can see the code for the script.
+
+![](<.gitbook/assets/image (252).png>)
+
+This is what the script does:
+
+1. Initialize $myname variable which is whatever the whoami output is for the user.
+2. Second variable($mytarget) is the output of md5sum and cut of command `echo I am user bandit23`.
+3. Lastly, it copies the password for bandit23 to file /tmp/$mytarget.
+
+So now we just need to redo the command to get the value of $mytarget variable. The output of the command will be the filename that kept the password for the next level.
+
+![](<.gitbook/assets/image (88).png>)
+
+### Bandit 23-24
+
+![](<.gitbook/assets/image (122).png>)
+
+Bandit 23-24 is a challenge that test our understanding from the previous levels and the logic behind a code or script. As the previous level, we can cat the cronjob script for bandit24 and try to understand what it does.
+
+![](<.gitbook/assets/image (187).png>)
+
+From my understanding this is what the script does:
+
+1. Initialize $myname variable(bandit23).
+2. If the owner of the file is bandit23, it will e**xecutes** and delete all files in /var/spool/bandit23.
+3. This process happens every 60 second.
+
+Since the script will first **executes** with permission of user bandit24  before deleting them, we can create a script that cat the password in /tmp/bandit\_pass/bandit24 and save it into a writable file in  /tmp/. So first we create a directory in /tmp/, then we create an empty file called pass.txt. Lastly, we changed the permission of the file so that it can be read or write by anyone using chmod 777.
+
+![](<.gitbook/assets/image (46).png>)
+
+Then we cd to /var/spool/bandit24 and create a script in there. Make sure to change the permission of the script so anyone can read or write it using chmod 777. Since the file in this folder is deleted every 60s, we might have to do it a couple times to ensure we can change the permission before it is deleted.
+
+![](<.gitbook/assets/image (60).png>)
+
+What the script does is it cat the file /etc/bandit\_pass/bandit24 and save the output tothe file we created previously in /tmp/asylumdx/pass.txt.&#x20;
+
+![](<.gitbook/assets/image (61).png>)
+
+Now we can see whether the cronjob script has executed the script by checking if the script.sh file is still in the directory. When we see the file has been deleted, we should be able to see the password in /tmp/asylumdxs/pass.txt.
+
+![](<.gitbook/assets/image (113).png>)
+
+<mark style="color:red;">Some notes for myself</mark>: I wasnt aware that the cronjob script needed permission in order for them to execute the script and write to the pass.txt file. It took me some googling on "kali cronjob script not working" till I find an answer in [stackoverflow forum](https://stackoverflow.com/questions/22743548/cronjob-not-running).
+
+### Bandit 24-25
+
+![](<.gitbook/assets/image (32).png>)
+
+Bandit 24-25 asks us to brute force the pincode alongside the password for bandit24 and submit it port 30002. We can create a bash script for this task.
+
