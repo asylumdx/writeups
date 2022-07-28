@@ -2,7 +2,7 @@
 description: https://underthewire.tech/century
 ---
 
-# 🐈⬛ UnderTheWire Century
+# 🐈⬛ 🐈⬛ UnderTheWire Century
 
 ### Century 0-1
 
@@ -30,9 +30,9 @@ According to this [microsoft module](https://docs.microsoft.com/en-us/powershell
 
 ### Century 2-3
 
-![](<.gitbook/assets/image (241).png>)
+![](<.gitbook/assets/image (150).png>)
 
-![](<.gitbook/assets/image (266).png>)
+![](<.gitbook/assets/image (289).png>)
 
 `Invoke-WebRequest` has the same function as wget command according to [https://linuxhint.com/run-wget-powershell/](https://linuxhint.com/run-wget-powershell/).
 

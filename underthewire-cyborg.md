@@ -34,7 +34,7 @@ Then, we use [Get-DnsServerResourceRecord](https://docs.microsoft.com/en-us/powe
 
 
 
-![](<.gitbook/assets/image (263).png>)
+![](<.gitbook/assets/image (286).png>)
 
 <mark style="color:green;">88\_objects</mark>
 
@@ -62,7 +62,7 @@ Then, we use [Get-DnsServerResourceRecord](https://docs.microsoft.com/en-us/powe
 
 ![](<.gitbook/assets/image (234).png>)
 
-![](<.gitbook/assets/image (257).png>)
+![](<.gitbook/assets/image (280).png>)
 
 <mark style="color:green;">cybergeddon</mark>
 
@@ -122,7 +122,7 @@ spaceballs
 
 ![](<.gitbook/assets/image (94).png>)
 
-![](<.gitbook/assets/image (250).png>)
+![](<.gitbook/assets/image (273).png>)
 
 ![](<.gitbook/assets/image (232).png>)
 

@@ -34,7 +34,7 @@ From these details, we can login to the mysql database of the website. It seems 
 
 In staff database, I was able to get user information and password id that has been encrypted with base64. Considering there is no email in the names, it seems that it might be used for ssh login.&#x20;
 
-![](<.gitbook/assets/image (261).png>)
+![](<.gitbook/assets/image (284).png>)
 
 Since we does not know which password are for each users, we can use [hydra](https://www.kali.org/tools/hydra/), a powerful login cracker to brute force the ssh login. After decrypting all passwords, we save them into a file called pass.txt along with a file called user.txt.
 
@@ -48,11 +48,11 @@ Then we can use command `hydra -L username.txt -P pass.txt 192.168.56.103 ssh` t
 
 First, I tried to login as travis and was able to get the user flag.
 
-![](<.gitbook/assets/image (251).png>)
+![](<.gitbook/assets/image (274).png>)
 
 Then I proceed to login as dexter and found a file called note.txt. The file stated that there is a vulnerable exploit in the system with a hint that the executable files are partially viewable.&#x20;
 
-![](<.gitbook/assets/image (21).png>)
+![](<.gitbook/assets/image (84).png>)
 
 Then I proceed to search for any executable setuid in the server using command  find / -perm -u=s -type f 2>dev/null.&#x20;
 
@@ -68,7 +68,7 @@ From the results, we can see a file called get\_access which seems to be the sou
 
 Since the hint mentions that we can partially view the executables, we tried to run strings on the file.
 
-![](<.gitbook/assets/image (254).png>)
+![](<.gitbook/assets/image (277).png>)
 
 From what we can see here, we can understand how the setuid executable works. It used cat command onto a file in root directory to display the error message. From that details, we can use a setuid priviledge escalation exploit which is known as [path injection](https://blog.creekorful.org/2020/09/setuid-privilege-escalation/). Simply the steps are:
 

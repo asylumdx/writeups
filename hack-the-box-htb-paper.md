@@ -12,13 +12,13 @@ Recon
 
 Foothold
 
-![](<.gitbook/assets/image (260).png>)
+![](<.gitbook/assets/image (283).png>)
 
 ![](<.gitbook/assets/image (89).png>)
 
 [CVE-2019-17671](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-17671)
 
-![](<.gitbook/assets/image (247).png>)
+![](<.gitbook/assets/image (222).png>)
 
 {% embed url="https://wpscan.com/vulnerability/3413b879-785f-4c9f-aa8a-5a4a1d5e0ba2" %}
 
@@ -34,7 +34,7 @@ LFI
 
 ![](<.gitbook/assets/image (117).png>)
 
-![](<.gitbook/assets/image (262).png>)
+![](<.gitbook/assets/image (185).png>)
 
 
 
