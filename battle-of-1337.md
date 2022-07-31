@@ -125,6 +125,8 @@ Proceed to use some steganography tools including steghide.
 
 Managed to extract a .cap file from the image.
 
+![](.gitbook/assets/Picture1.png)
+
 Opening the file in Wireshark, we can see it contains packet from a wifi network. From the challenge description, we have to crack the wifi password from the packets using the hint give. We can use aircrack-ng to crack the wpa handshake, however we need to have a wordlist. The description given of the wifi password is:
 
 \- pet name
@@ -145,6 +147,10 @@ From this description, we can conclude and guess the password. Since the pet is 
 
 Crunch will generate the wordlist for us.
 
+![](.gitbook/assets/Picture2.png)
+
+![](.gitbook/assets/Picture3.png)
+
 Using the wordlist, we can start cracking the password, and finally get the password which is oyen@9367.
 
 BO1337{oyen@9367}
@@ -153,37 +159,63 @@ BO1337{oyen@9367}
 
 ### Back To The Future <a href="#_toc109087291" id="_toc109087291"></a>
 
+![](.gitbook/assets/Picture4.png)
+
 From challenge name we can guess that we have to see the website from previous date. Using wayback machine we can see the the site has been indexed on 4 July. Opening the site present is with flag.
 
 [https://archive.org/web/](https://archive.org/web/)
 
-BO1337{aHR0cHM6Ly9veW0uY2F0bWUuY2Y=}
+![](.gitbook/assets/Picture5.png)
 
 ### 1Gram <a href="#_toc109087292" id="_toc109087292"></a>
 
+![](.gitbook/assets/Picture6.png)
+
 We can search for any Instagram @ from the website and found one @mikrahazura.
+
+![](.gitbook/assets/Picture7.png)
 
 Going to instagram profile, we can see part of the flag.
 
+![](.gitbook/assets/Picture8.png)
+
 One of the image tagged several profile.
+
+![](.gitbook/assets/Picture9.png)
 
 One of the profile contains the next part of the flag.
 
+![](<.gitbook/assets/image (246).png>)
+
 Proceed to repeat the process, and combine the flag.
+
+![](<.gitbook/assets/image (30).png>)
+
+
 
 BO1337{S74LK\_4P4\_7U?}.
 
 ### Snap <a href="#_toc109087293" id="_toc109087293"></a>
 
+![](<.gitbook/assets/image (36).png>)
+
 From the previous challenge, we can see another profile
+
+![](<.gitbook/assets/image (51).png>)
 
 Caption says “dimanakah saya”. I noticed that the profile image on this profile wasn’t completed.
 
 I proceed to download all the profile pictures and used canva to combine the image.
 
+![](<.gitbook/assets/image (6).png>)
+
 From the grid on the picture, we can guess that we need to use profile picture of other profiles to get the full image.
 
+![](<.gitbook/assets/image (90).png>)
+
 After getting the full image, I started using reverse image search on Google to find any similar image.
+
+![](<.gitbook/assets/image (17).png>)
 
 From here we know that the image came from Imbi MRT. I was confused on where the flag was and opened a ticket on whether we need to fill the BO1337{flag} format ourself in order to submit and the admin answered yes. It’s pretty confusing to be honest since no declaration in description.
 
@@ -193,17 +225,29 @@ BO1337{Imbi}
 
 ### Rayquaza <a href="#_toc109087295" id="_toc109087295"></a>
 
+![](<.gitbook/assets/image (2).png>)
+
 First we can check the file type, it turns out to be a GBA rom. To run the rom, we can use any GBA emulator such as VBA, but first we must rename the file to 1337Pikachu.gba.
+
+![](<.gitbook/assets/image (8).png>)
 
 Opening the game, it turns to be a pokemon emerald rom.
 
 After talking with the mom and stuff we proceed to go out and find the fat man from the description and he gave us the flag.
 
+![](<.gitbook/assets/image (5).png>)
+
 BO1337{91091b84a367c97a93eb7b5ba35e850e}
 
 ### Heihawru <a href="#_toc109087296" id="_toc109087296"></a>
 
+![](<.gitbook/assets/image (13).png>)
+
 Opening the .txt file, we can see encoded text and numbers with ?:?:? format, I proceed to decode it using [dcode.fr](https://www.dcode.fr/caesar-cipher) Caesar cipher tool.
+
+![](<.gitbook/assets/image (9).png>)
+
+![](<.gitbook/assets/image (3).png>)
 
 Turns out to be a song lyric. From here, I start to guess the relation between the lyrics and the number and realize how to decode it. Taking 5:6:2 as an example:
 
@@ -219,17 +263,29 @@ BO1337{darK3noKluai}
 
 ### GunTher
 
+![](<.gitbook/assets/image (7).png>)
+
 Treating the challenge as steganography, I proceed to use all the audio stega tools such as spectrogram,steghide,binwalk etc.
 
+![](.gitbook/assets/image.png)
+
 Finally using Deepsound, I manage to extract an image containing the flag.
+
+![](<.gitbook/assets/image (12).png>)
 
 BO1337{9d6382bf597a3014a8472762fedce888}
 
 ### Sheng Xiao <a href="#_toc109087297" id="_toc109087297"></a>
 
+![](<.gitbook/assets/image (1).png>)
+
 Downloading the image, we can see encoded text, from description we can guess it uses the same cipher from zodiac killer.
 
+![](<.gitbook/assets/image (11).png>)
+
 Searching for some online tools, finally found one that was able to decode the text.
+
+![](<.gitbook/assets/image (15).png>)
 
 [http://zodiackillerciphers.com/typewriter/](http://zodiackillerciphers.com/typewriter/)
 
@@ -237,7 +293,11 @@ BO1337{f4ec90216d2d7d5edb7c201919fce008e8}
 
 ### Darchrow <a href="#_toc109087298" id="_toc109087298"></a>
 
+![](<.gitbook/assets/image (4).png>)
+
 The image contains text.
+
+![](<.gitbook/assets/image (18).png>)
 
 To extract the text, we can use OCR tools such as : [https://www.imagetotext.info/](https://www.imagetotext.info/) however we still need to correct the extracted type. From the challenge name darchrow, we can google and know that it is the hero used in Dota which is now known as enigma in Dota 2.
 
@@ -247,12 +307,18 @@ I knew about the enigma cipher that was used during the word war and proceed to 
 
 https://www.dcode.fr/cipher-identifier
 
+![](<.gitbook/assets/image (16).png>)
+
 ISTOPENQUIRESTOPFORYOUSTOPTOREADANDDECRPYTTHISSTOPFORALANTURINGSTOPFORHISSUCCESSSTOPOFDECRYPTINGSTOPALLTHEGERMANSTOPMESSAGESTOPTHEFLAGISBOBRACESENIGMAFORALANTURINGBRACESONLYTHOSEWHOAREASLEEPDONTMAKEMISTAKESGETNOCRITIQUESEEMSEVERYBODYSWORRIEDBOUTTHINGSTHATWEARETHINKINGANDWHENTHEREMEDYSTHEENEMYYOUHIDESELFDEPRECATIONUPYOURSLEEVEANDSELFSERVINGFRIENDSWHOLEAVEWHENYOUARESINKING
 
 BO1337{ENIGMAFORALANTURING}
 
 ### RedPoint <a href="#_toc109087299" id="_toc109087299"></a>
 
+![](<.gitbook/assets/image (10).png>)
+
 Probably one of the most ridiculous challenges. I spend hours trying to extract flag from the image and the file name. When I saw some people started getting the answer, I realize I was overthinking it. Basically, the flag is just what the arrow is pointing at which is the screwdriver.
+
+![](<.gitbook/assets/image (14).png>)
 
 BO1337{screwdriver}

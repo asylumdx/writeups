@@ -14,7 +14,7 @@ Starting the ICA1 box willl greet us with a login page with details of the box i
 
 From the nmap scan, we can see three open ports which are ssh, http and mysql. Since we dont have any details about ssh and mysql, we can visit the http website first.
 
-![](<.gitbook/assets/image (54).png>)
+![](<.gitbook/assets/image (54) (1).png>)
 
 It seems that the website is an older version of [qdPM](https://qdpm.net/), a free open source web-based project management tool. Searching for qdPM 9.2 gave us results of an information disclosure exploit where anyone can access the website database login details by going to http://\<target>/core/config.databases.yml.
 

@@ -6,11 +6,11 @@ description: https://underthewire.tech/cyborg
 
 ### Cyborg 1-2
 
-![](<.gitbook/assets/image (4).png>)
+![](<.gitbook/assets/image (4) (1).png>)
 
 Use `Get-ADUser -Filter "Name -like '*chris*'" -Properties State .`
 
-![](<.gitbook/assets/image (11).png>)
+![](<.gitbook/assets/image (11) (1).png>)
 
 <mark style="color:green;">kansas</mark>
 
@@ -30,7 +30,7 @@ Then, we use [Get-DnsServerResourceRecord](https://docs.microsoft.com/en-us/powe
 
 ### Cyborg 3-4
 
-![](<.gitbook/assets/image (5).png>)
+![](<.gitbook/assets/image (5) (1).png>)
 
 
 
@@ -78,7 +78,7 @@ skynet
 
 ### Cyborg 8-9
 
-![](<.gitbook/assets/image (2).png>)
+![](<.gitbook/assets/image (2) (1).png>)
 
 ![](<.gitbook/assets/image (52).png>)
 

@@ -6,7 +6,7 @@ description: https://underthewire.tech/century
 
 ### Century 0-1
 
-![](<.gitbook/assets/image (1).png>)
+![](<.gitbook/assets/image (1) (1).png>)
 
 ![](<.gitbook/assets/image (42).png>)
 
@@ -54,7 +54,7 @@ We can use `(Get-ChildItem | Measure-Object)`.Count to get the total number of f
 
 ### Century 4-5
 
-![](<.gitbook/assets/image (228).png>)
+![](<.gitbook/assets/image (228) (1).png>)
 
 CD to the directory either by pressing tab or specify directory name using '\file'.
 
