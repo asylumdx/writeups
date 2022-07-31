@@ -8,4 +8,4 @@
 * [🐈⬛ UnderTheWire Century](underthewire-century.md)
 * [🕊 UnderTheWire Cyborg](underthewire-cyborg.md)
 * [📰 Hack The Box (HTB) Paper](hack-the-box-htb-paper.md)
-* [📍 Battle of 1337](https://github.com/asylumdx/writeups/edit/main/README.md)
+* [📍 Battle of 1337](battle-of-1337.md)
