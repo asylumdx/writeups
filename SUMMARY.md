@@ -6,6 +6,6 @@
 * [🦨 ICA1 Vulnhub Writeup](ica1-vulnhub-writeup.md)
 * [🐣 Lazy Status Web Pentest](lazy-status-web-pentest.md)
 * [🐃 Pico CTF 2021 Writeups](pico-ctf-2021-writeups.md)
-* [🐈⬛ 🐈⬛ UnderTheWire Century](underthewire-century.md)
+* [🐈⬛ 🐈⬛ 🐈⬛ UnderTheWire Century](underthewire-century.md)
 * [🕊 UnderTheWire Cyborg](underthewire-cyborg.md)
 * [📍 Battle Of 1337](battle-of-1337.md)

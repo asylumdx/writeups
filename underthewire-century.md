@@ -2,7 +2,7 @@
 description: https://underthewire.tech/century
 ---
 
-# 🐈⬛ 🐈⬛ UnderTheWire Century
+# 🐈⬛ 🐈⬛ 🐈⬛ UnderTheWire Century
 
 ### Century 0-1
 
@@ -30,7 +30,7 @@ According to this [microsoft module](https://docs.microsoft.com/en-us/powershell
 
 ### Century 2-3
 
-![](<.gitbook/assets/image (150).png>)
+![](<.gitbook/assets/image (150) (2).png>)
 
 ![](<.gitbook/assets/image (289).png>)
 
