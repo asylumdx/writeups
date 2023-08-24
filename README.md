@@ -1,6 +1,6 @@
 # Table of contents
 
-* [💻 Bandit OverTheWire](README.md)
+* [💻 Bandit OverTheWire](./)
 * [🐃 Pico CTF 2021 Writeups](pico-ctf-2021-writeups.md)
 * [🦌 Hack@10 2021 Writeup](hack-10-2021-writeup.md)
 * [🦨 ICA1 Vulnhub Writeup](ica1-vulnhub-writeup.md)
@@ -9,3 +9,4 @@
 * [🕊 UnderTheWire Cyborg](underthewire-cyborg.md)
 * [📰 Hack The Box (HTB) Paper](hack-the-box-htb-paper.md)
 * [📍 Battle of 1337](battle-of-1337.md)
+* [Bypassing File Upload With IDAT on Crater Invoice](bypassing-file-upload-with-idat-on-crater-invoice.md)
