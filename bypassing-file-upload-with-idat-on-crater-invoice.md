@@ -1,12 +1,116 @@
+---
+description: Crater is a open source invoice solution with over 7000+ stars on github.
+---
+
 # Bypassing File Upload With IDAT on Crater Invoice
-
-## Introduction
-
-Crater is a open source invoice solution with over 7000+ stars on github.&#x20;
 
 ## Description
 
 In latest or 6.0.6 version of crater, superadmin is able to upload PHP file instead of an image using the Company Logo upload feature. The Base64Mime.php checking function can be bypassed by embedding a valid PHP payload into an IDAT image chunk. I have used https://github.com/huntergregal/PNG-IDAT-Payload-Generator for the poc.
+
+## Analysis
+
+<figure><img src=".gitbook/assets/image (71).png" alt=""><figcaption></figcaption></figure>
+
+Looking at the functon used for uploading the company logo, it uses Base64Mime.
+
+```
+class Base64Mime implements Rule
+{
+    private $attribute;
+
+    private $extensions;
+
+    /**
+     * Create a new rule instance.
+     *
+     * @return void
+     */
+    public function __construct(array $extensions)
+    {
+        $this->extensions = $extensions;
+    }
+
+    /**
+     * Determine if the validation rule passes.
+     *
+     * @param  string  $attribute
+     * @param  mixed  $value
+     * @return bool
+     */
+    public function passes($attribute, $value)
+    {
+        $this->attribute = $attribute;
+
+        try {
+            $data = json_decode($value)->data;
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        $pattern = '/^data:\w+\/[\w\+]+;base64,[\w\+\=\/]+$/';
+
+        if (! preg_match($pattern, $data)) {
+            return false;
+        }
+
+        $data = explode(',', $data);
+
+        if (! isset($data[1]) || empty($data[1])) {
+            return false;
+        }
+
+        try {
+            $data = base64_decode($data[1]);
+            $f = finfo_open();
+            $result = finfo_buffer($f, $data, FILEINFO_EXTENSION);
+
+            if ($result === '???') {
+                return false;
+            }
+
+            if (strpos($result, '/')) {
+                foreach (explode('/', $result) as $ext) {
+                    if (in_array($ext, $this->extensions)) {
+                        return true;
+                    }
+                }
+            } else {
+                if (in_array($result, $this->extensions)) {
+                    return true;
+                }
+            }
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        return false;
+    }
+
+    /**
+     * Get the validation error message.
+     *
+     * @return string
+     */
+    public function message()
+    {
+        return 'The '.$this->attribute.' must be a json with file of type: '.implode(', ', $this->extensions).' encoded in base64.';
+    }
+}
+
+```
+
+The code checks whether the given data:
+
+1. Is a valid JSON format.
+2. Matches the pattern of a base64-encoded file.
+3. Contains a non-empty data portion after decoding the base64 data.
+4. Decoded content can be identified as a valid file format using the `finfo` extension.
+5. Matches one of the specified file extensions.
+
+The `finfo` extension provides functions that allow us to inspect the contents of a file and determine its MIME type, encoding, and other characteristics. MIME types are a standardized way of identifying files on the internet, and they provide information about the nature of the file's contents. For example, a MIME type might indicate that a file is an image, a text document, an audio file.
+
+I tried several way to bypass the mime checking such as putting payload in comments, changing mime-type, etc. But finally, I tried a technique which was commonly used to bypass phpgd checks which was putting the payload in IDAT chunk of the image and it was successful. You can read synack blog about it here. [https://www.synacktiv.com/publications/persistent-php-payloads-in-pngs-how-to-inject-php-code-in-an-image-and-keep-it-there.html](https://www.synacktiv.com/publications/persistent-php-payloads-in-pngs-how-to-inject-php-code-in-an-image-and-keep-it-there.html) .&#x20;
 
 ## Proof of Concept
 

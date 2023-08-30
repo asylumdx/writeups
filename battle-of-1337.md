@@ -125,7 +125,11 @@ Proceed to use some steganography tools including steghide.
 
 Managed to extract a .cap file from the image.
 
-![](.gitbook/assets/Picture1.png)
+<div align="center">
+
+<img src=".gitbook/assets/Picture1.png" alt="">
+
+</div>
 
 Opening the file in Wireshark, we can see it contains packet from a wifi network. From the challenge description, we have to crack the wifi password from the packets using the hint give. We can use aircrack-ng to crack the wpa handshake, however we need to have a wordlist. The description given of the wifi password is:
 
