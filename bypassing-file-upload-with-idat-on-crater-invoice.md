@@ -8,7 +8,7 @@ description: Crater is a open source invoice solution with over 7000+ stars on g
 
 In latest or 6.0.6 version of crater, superadmin is able to upload PHP file instead of an image using the Company Logo upload feature. The Base64Mime.php checking function can be bypassed by embedding a valid PHP payload into an IDAT image chunk. I have used https://github.com/huntergregal/PNG-IDAT-Payload-Generator for the poc.
 
-PS: I've contacted the maintainers through huntr.dev on april and they have acknowledged the vulnerability but the project seems to be in maintanance for almost a year. I've given them 5 months to fix(they didnt respond after acknowledging it) and decided to release this blog.&#x20;
+PS: This is a responsible disclosure. I've contacted the maintainers through huntr.dev on april and they have acknowledged the vulnerability but the project seems to be in maintanance for almost a year. I've given them 5 months to fix(they didnt respond after acknowledging it) and decided to release this blog.&#x20;
 
 ## Analysis
 
