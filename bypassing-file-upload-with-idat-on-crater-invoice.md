@@ -184,4 +184,4 @@ F�(▒~#J�W�IEND�B`�
 
 ## Impact
 
-Although it requires superadmin privilege, remote attacker that may be able to steal credential through social engineering or brute force will be able to execute arbitrary PHP code which is not intended as part of Crater's app.
+Although it requires superadmin privilege, remote attacker that may be able to steal credential through password guessing or brute force will be able to execute arbitrary PHP code which is not intended as part of Crater's app.
