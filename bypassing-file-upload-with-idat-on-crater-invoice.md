@@ -12,6 +12,46 @@ PS: This is a responsible disclosure. I've contacted the maintainers through hun
 
 ## Analysis
 
+The uploadCompanyLogo function will take the request sent to `/api/v1/company/upload-logo`  and uses CompanyLogoRequest to process the image that has been encoded in base64. Since the filename is taken directly without any extension validation(line 25), we should be able to upload an executable php file as long as we managees to bypass the CompanyLogoRequest class.
+
+{% code lineNumbers="true" %}
+```php
+    /**
+     * Upload the company logo to storage.
+     *
+     * @param  \Crater\Http\Requests\CompanyLogoRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function uploadCompanyLogo(CompanyLogoRequest $request)
+    {
+        $company = Company::find($request->header('company'));
+
+        $this->authorize('manage company', $company);
+
+        $data = json_decode($request->company_logo);
+
+        if (isset($request->is_company_logo_removed) && (bool) $request->is_company_logo_removed) {
+            $company->clearMediaCollection('logo');
+        }
+        if ($data) {
+            $company = Company::find($request->header('company'));
+
+            if ($company) {
+                $company->clearMediaCollection('logo');
+
+                $company->addMediaFromBase64($data->data)
+                    ->usingFileName($data->name)
+                    ->toMediaCollection('logo');
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+        ]);
+    }
+```
+{% endcode %}
+
 The CompanyLogoRequest class is used to handle the company logo upload endpoint. It uses another class which is Base64Mime with an array of extensions to verify the uploaded image.
 
 {% code lineNumbers="true" %}
