@@ -1,45 +1,65 @@
 ---
-description: Crater is a open source invoice solution with over 7000+ stars on github.
+description: Crater is an open source invoice solution with over 7000+ stars on github.
 ---
 
 # Bypassing File Upload With IDAT on Crater Invoice
 
 ## Description
 
-In latest or 6.0.6 version of crater, superadmin is able to upload PHP file instead of an image using the Company Logo upload feature. The Base64Mime.php checking function can be bypassed by embedding a valid PHP payload into an IDAT image chunk. I have used https://github.com/huntergregal/PNG-IDAT-Payload-Generator for the poc.
+In latest or 6.0.6 version of crater, superadmin is able to upload PHP file instead of an image using the Company Logo upload feature. The Base64Mime.php checking class can be bypassed by embedding a valid PHP payload into an IDAT image chunk. I have used https://github.com/huntergregal/PNG-IDAT-Payload-Generator for the poc.
 
 PS: This is a responsible disclosure. I've contacted the maintainers through huntr.dev on april and they have acknowledged the vulnerability but the project seems to be in maintanance for almost a year. I've given them 5 months to fix(they didnt respond after acknowledging it) and decided to release this blog.&#x20;
 
 ## Analysis
 
-<figure><img src=".gitbook/assets/image (71).png" alt=""><figcaption></figcaption></figure>
+The CompanyLogoRequest class is used to handle the company logo upload endpoint. It uses another class which is Base64Mime with an array of extensions to verify the uploaded image.
 
-Looking at the functon used for uploading the company logo, it uses Base64Mime.
+```php
+<?php
 
+namespace Crater\Http\Requests;
+
+use Crater\Rules\Base64Mime;
+use Illuminate\Foundation\Http\FormRequest;
+
+class CompanyLogoRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'company_logo' => [
+                'nullable',
+                new Base64Mime(['gif', 'jpg', 'png'])
+            ]
+        ];php
+    }
+}
 ```
+
+```php
 class Base64Mime implements Rule
 {
     private $attribute;
-
     private $extensions;
-
-    /**
-     * Create a new rule instance.
-     *
-     * @return void
-     */
     public function __construct(array $extensions)
     {
         $this->extensions = $extensions;
     }
-
-    /**
-     * Determine if the validation rule passes.
-     *
-     * @param  string  $attribute
-     * @param  mixed  $value
-     * @return bool
-     */
     public function passes($attribute, $value)
     {
         $this->attribute = $attribute;
@@ -88,12 +108,6 @@ class Base64Mime implements Rule
 
         return false;
     }
-
-    /**
-     * Get the validation error message.
-     *
-     * @return string
-     */
     public function message()
     {
         return 'The '.$this->attribute.' must be a json with file of type: '.implode(', ', $this->extensions).' encoded in base64.';
@@ -102,15 +116,14 @@ class Base64Mime implements Rule
 
 ```
 
-The code checks whether the given data:
+The class checks whether the given data:
 
 1. Is a valid JSON format.
 2. Matches the pattern of a base64-encoded file.
-3. Contains a non-empty data portion after decoding the base64 data.
-4. Decoded content can be identified as a valid file format using the `finfo` extension.
-5. Matches one of the specified file extensions.
+3. Decoded content can be identified as a valid file format using the `finfo` extension.
+4. Return true if the finfo results is within the accepted extensions(gif,jpg,png).
 
-The `finfo` extension provides functions that allow us to inspect the contents of a file and determine its MIME type, encoding, and other characteristics. MIME types are a standardized way of identifying files on the internet, and they provide information about the nature of the file's contents. For example, a MIME type might indicate that a file is an image, a text document, an audio file.
+The `finfo` extension provides functions that allow us to inspect the contents of a file and determine its MIME type and encoding(similar to the `file`  function in linux).&#x20;
 
 I tried several way to bypass the mime checking such as putting payload in comments, changing mime-type, etc. But finally, I tried a technique which was commonly used to bypass phpgd checks which was putting the payload in IDAT chunk of the image and it was successful. You can read synack blog about it here. [https://www.synacktiv.com/publications/persistent-php-payloads-in-pngs-how-to-inject-php-code-in-an-image-and-keep-it-there.html](https://www.synacktiv.com/publications/persistent-php-payloads-in-pngs-how-to-inject-php-code-in-an-image-and-keep-it-there.html) .&#x20;
 
