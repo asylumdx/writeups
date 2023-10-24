@@ -14,6 +14,7 @@ PS: This is a responsible disclosure. I've contacted the maintainers through hun
 
 The CompanyLogoRequest class is used to handle the company logo upload endpoint. It uses another class which is Base64Mime with an array of extensions to verify the uploaded image.
 
+{% code lineNumbers="true" %}
 ```php
 <?php
 
@@ -50,7 +51,9 @@ class CompanyLogoRequest extends FormRequest
     }
 }
 ```
+{% endcode %}
 
+{% code overflow="wrap" lineNumbers="true" %}
 ```php
 class Base64Mime implements Rule
 {
@@ -115,6 +118,7 @@ class Base64Mime implements Rule
 }
 
 ```
+{% endcode %}
 
 The class checks whether the given data:
 
@@ -125,7 +129,39 @@ The class checks whether the given data:
 
 The `finfo` extension provides functions that allow us to inspect the contents of a file and determine its MIME type and encoding(similar to the `file`  function in linux).&#x20;
 
+To test on how to bypass the finfo checks, I played around with the finfo function.
+
+```php
+<?php
+$file = $argv[1];
+
+$allowedExtensions = ['gif', 'png', 'jpeg'];
+$data = file_get_contents($file);
+$finfo = finfo_open(FILEINFO_MIME_TYPE);
+
+// Get the MIME type of the file
+$mime = finfo_buffer($finfo, $data);
+
+// Extract the extension from the MIME type
+$extension = explode('/', $mime)[1];
+
+echo "MIME Type: $mime\n";
+
+// Check if the extension is in the list of allowed extensions
+if (in_array($extension, $allowedExtensions)) {
+    echo "The file is an allowed image ({$extension})\n";
+} else {
+    echo "The file is not an allowed image.\n";
+}
+
+// Close the fileinfo resource
+finfo_close($finfo);
+
+```
+
 I tried several way to bypass the mime checking such as putting payload in comments, changing mime-type, etc. But finally, I tried a technique which was commonly used to bypass phpgd checks which was putting the payload in IDAT chunk of the image and it was successful. You can read synack blog about it here. [https://www.synacktiv.com/publications/persistent-php-payloads-in-pngs-how-to-inject-php-code-in-an-image-and-keep-it-there.html](https://www.synacktiv.com/publications/persistent-php-payloads-in-pngs-how-to-inject-php-code-in-an-image-and-keep-it-there.html) .&#x20;
+
+<figure><img src=".gitbook/assets/image (253).png" alt=""><figcaption></figcaption></figure>
 
 ## Proof of Concept
 
@@ -197,4 +233,4 @@ F�(▒~#J�W�IEND�B`�
 
 ## Impact
 
-Although it requires superadmin privilege, remote attacker that may be able to steal credential through password guessing or brute force will be able to execute arbitrary PHP code which is not intended as part of Crater's app.
+Although it requires superadmin privilege, remote attacker that may be able to get credential through password guessing or brute force will be able to execute arbitrary PHP code which is not intended as part of Crater's app.
