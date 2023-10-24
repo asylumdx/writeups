@@ -1,5 +1,5 @@
 ---
-description: Crater is an open source invoice solution with over 7000+ stars on github.
+description: Crater is an open source invoice solution.
 ---
 
 # Bypassing File Upload With IDAT on Crater Invoice
