@@ -12,7 +12,7 @@ PS: This is a responsible disclosure. I've contacted the maintainers through hun
 
 ## Analysis
 
-The uploadCompanyLogo function will take the request sent to `/api/v1/company/upload-logo`  and uses CompanyLogoRequest to process the image that has been encoded in base64. Since the filename is taken directly without any extension validation(line 25), we should be able to upload an executable php file as long as we managees to bypass the CompanyLogoRequest class.
+The uploadCompanyLogo function will take the request sent to `/api/v1/company/upload-logo`  and uses CompanyLogoRequest to process the image that has been encoded in base64. Since the filename is taken directly without any extension validation(line 25), we should be able to upload an executable php file if we manages to bypass the CompanyLogoRequest class.
 
 {% code lineNumbers="true" %}
 ```php
