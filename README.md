@@ -9,4 +9,4 @@
 * [🕊 UnderTheWire Cyborg](underthewire-cyborg.md)
 * [📰 Hack The Box (HTB) Paper](hack-the-box-htb-paper.md)
 * [📍 Battle of 1337](battle-of-1337.md)
-* [Bypassing File Upload With IDAT on Crater Invoice](bypassing-file-upload-with-idat-on-crater-invoice.md)
+* [Bypassing File Upload With IDAT on Crater Invoice](broken-reference)

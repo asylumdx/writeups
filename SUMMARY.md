@@ -9,4 +9,3 @@
 * [🐈⬛ 🐈⬛ 🐈⬛ UnderTheWire Century](underthewire-century.md)
 * [🕊 UnderTheWire Cyborg](underthewire-cyborg.md)
 * [📍 Battle Of 1337](battle-of-1337.md)
-* [Bypassing File Upload With IDAT on Crater Invoice](bypassing-file-upload-with-idat-on-crater-invoice.md)
